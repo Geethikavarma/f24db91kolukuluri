@@ -1,0 +1,42 @@
+doctype html
+html
+  head
+    title Artifacts Search Results
+    link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
+  body
+    h1 Artifacts Search Results
+
+    .container-fluid
+      .row
+        //- Step 1: Define the array in unbuffered server-side code
+        -
+          const results = [
+            { artifact_name: 'Ancient Vase', artifact_age: 1200, origin_culture: 'Greek' },
+            { artifact_name: 'Stone Tablet', artifact_age: 3500, origin_culture: 'Egyptian' },
+            { artifact_name: 'Samurai Sword', artifact_age: 600, origin_culture: 'Japanese' }
+          ]
+
+        //- Step 5: Iterate over each item in results with index
+        each item, index in results
+          .col-sm-2
+            h2 #{item.artifact_name}
+            p Age: #{item.artifact_age} years
+            p Origin: #{item.origin_culture}
+            button(class="buy-btn" data-index=index data-name=item.artifact_name) Buy
+
+    // Add a script to bind events for the buy buttons
+    script.
+      document.addEventListener('DOMContentLoaded', function() {
+        const buyButtons = document.querySelectorAll('.buy-btn');
+        buyButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            const index = button.getAttribute('data-index');
+            const name = button.getAttribute('data-name');
+            buy(index, name);
+          });
+        });
+      });
+
+      function buy(index, name) {
+        alert("You purchased item " + index + ": " + name);
+      }
