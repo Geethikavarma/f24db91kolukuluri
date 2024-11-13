@@ -3,13 +3,14 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+require('dotenv').config();
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var gridRouter = require('./routes/grid'); // Ensure this file exists
 var artifactsRouter = require('./routes/artifacts'); // Add the artifacts router
 var pickRouter = require('./routes/pick');
 var app = express();
+const mongoose = require('mongoose');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -26,6 +27,7 @@ app.use('/artifacts', artifactsRouter); // Route for /artifacts
 app.use('/pick', pickRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+mongoose.connect(process.env.MONGO_CON, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
