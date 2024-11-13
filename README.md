@@ -2,7 +2,7 @@
 
 ## I Am Geethika and I am doing Assignment 10 
 
-[Render_Link](https://f24wb91kolukuluri.onrender.com)
+[Render_Link](https://f24db91kolukuluri.onrender.com)
 
 ### Class: Artifacts
 - **artifact_name**: Name of the artifact (String)
