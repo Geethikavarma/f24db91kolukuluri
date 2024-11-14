@@ -1,51 +1,31 @@
-const Artifact = require('../models/artifacts'); // Replace with correct path
-const artifacts = require('../models/artifacts');
+var Artifact = require('../models/artifacts');  // Ensure this path is correct and 'Artifact' model exists
 
-// List all gadgets
-exports.artifacts_list = async (req, res) => {
-  try {
-    const artifacts = await artifacts.find();
-    res.status(200).json(artifacts);
-  } catch (err) {
-    res.status(500).json({ message: 'Failed to fetch artifacts' });
-  }
+// List all artifacts
+exports.artifact_list = function(req, res) {
+    // Logic for listing artifacts (for example, fetching from the database)
+    res.send('NOT IMPLEMENTED: artifact list');
 };
 
-// Get a specific Gadget by ID
+// Create a new artifact (POST)
+exports.artifact_create_post = function(req, res) {
+    // Logic for creating a new artifact
+    res.send('NOT IMPLEMENTED: artifact create POST');
+};
+
+// Get details of a specific artifact
 exports.artifact_detail = function(req, res) {
-  Gadget.findById(req.params.id, function(err, artifact) {
-    if (err || !gadget) return res.status(404).json({ message: "Gadget not found" });
-    res.status(200).json(artifact);
-  });
+    // Logic for fetching artifact details
+    res.send('NOT IMPLEMENTED: artifact detail ' + req.params.id);
 };
 
-// Create a new Gadget
-exports.gadget_create_post = async (req, res) => {
-  const newGadget = new Gadget({
-    artifact_name: req.body.artifact_name,
-    artifact_age: req.body.artifact_age,
-    origin_culture: req.body.origin_culture
-  });
-  try {
-    await newArtifact.save();
-    res.status(201).json({ message: 'Artifact created successfully', artifact: newArtifact });
-  } catch (err) {
-    res.status(400).json({ message: 'Failed to create artifact', error: err.message });
-  }
-};
-
-// Delete a Gadget by ID
-exports.artifact_delete = function(req, res) {
-  Artifact.findByIdAndDelete(req.params.id, function(err) {
-    if (err) return res.status(500).json({ message: "Error deleting artifact" });
-    res.status(204).send();
-  });
-};
-
-// Update a Gadget by ID
+// Update an existing artifact
 exports.artifact_update_put = function(req, res) {
-  Artifact.findByIdAndUpdate(req.params.id, req.body, { new: true }, function(err, updatedArtifact) {
-    if (err) return res.status(500).json({ message: "Error updating artifact" });
-    res.status(200).json(updatedArtifact);
-  });
+    // Logic for updating an artifact
+    res.send('NOT IMPLEMENTED: artifact update PUT ' + req.params.id);
+};
+
+// Delete an artifact
+exports.artifact_delete = function(req, res) {
+    // Logic for deleting an artifact
+    res.send('NOT IMPLEMENTED: artifact delete DELETE ' + req.params.id);
 };
