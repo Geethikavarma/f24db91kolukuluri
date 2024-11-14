@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 
 var api_controller = require('../controllers/api');
-var artifact_controller = require('../controllers/artifacts');
+var artifact_controller = require('../controllers/artifactsController');
 
 // API Route
 router.get('/', api_controller.api);
