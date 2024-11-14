@@ -1,6 +1,5 @@
 // models/artifacts.js
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
 
 const artifactSchema = new Schema({
@@ -10,5 +9,4 @@ const artifactSchema = new Schema({
 });
 
 const Artifact = mongoose.model('Artifact', artifactSchema);
-
 module.exports = Artifact;

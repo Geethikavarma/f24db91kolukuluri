@@ -1,18 +1,21 @@
+// routes/artifacts.js
 const express = require('express');
 const router = express.Router();
+const artifactsController = require('../controllers/artifactsController');
 
-// Sample data for artifacts
-const artifacts = [
-  { artifact_name: 'Ancient Vase', artifact_age: 1200, origin_culture: 'Greek' },
-  { artifact_name: 'Stone Tablet', artifact_age: 3500, origin_culture: 'Egyptian' },
-  { artifact_name: 'Samurai Sword', artifact_age: 600, origin_culture: 'Japanese' }
-];
+// GET request to list all artifacts
+router.get('/', artifactsController.artifact_list);
 
-router.get('/', (req, res) => {
-  res.render('artifacts', { 
-    title: 'Search Results - Artifacts', 
-    results: artifacts 
-  });
-});
+// POST request to create a new artifact
+router.post('/', artifactsController.artifact_create_post);
+
+// GET request to retrieve details of a specific artifact
+router.get('/:id', artifactsController.artifact_detail);
+
+// PUT request to update an existing artifact
+router.put('/:id', artifactsController.artifact_update_put);
+
+// DELETE request to delete an artifact
+router.delete('/:id', artifactsController.artifact_delete);
 
 module.exports = router;

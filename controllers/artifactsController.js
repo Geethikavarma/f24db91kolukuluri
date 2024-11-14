@@ -1,10 +1,11 @@
-var Artifact = require('../models/artifacts');  // Ensure this path is correct and 'Artifact' model exists
+// controllers/artifactsController.js
+const Artifact = require('../models/artifacts');  // Ensure the path is correct and 'Artifact' model exists
 
 // List all artifacts
 exports.artifact_list = async function(req, res) {
   try {
-    const artifacts = await Artifact.find();  // Fetch all artifacts from the database
-    res.status(200).json(artifacts);  // Send the artifacts as JSON response
+    const artifacts = await Artifact.find();
+    res.status(200).json(artifacts);
   } catch (err) {
     res.status(500).json({ message: `Error: ${err.message}` });
   }
@@ -13,25 +14,12 @@ exports.artifact_list = async function(req, res) {
 // Create a new artifact (POST)
 exports.artifact_create_post = async function(req, res) {
   try {
-    // Extract data from the request body
     const { artifact_type, origin, age } = req.body;
-
-    // Validate input
     if (!artifact_type || !origin || !age) {
       return res.status(400).json({ message: "All fields (artifact_type, origin, age) are required" });
     }
-
-    // Create a new artifact document
-    const newArtifact = new Artifact({
-      artifact_type,
-      origin,
-      age
-    });
-
-    // Save the new artifact to the database
+    const newArtifact = new Artifact({ artifact_type, origin, age });
     const savedArtifact = await newArtifact.save();
-
-    // Send the newly created artifact as a JSON response
     res.status(201).json(savedArtifact);
   } catch (err) {
     res.status(500).json({ message: `Error: ${err.message}` });
@@ -57,7 +45,7 @@ exports.artifact_update_put = async function(req, res) {
     const updatedArtifact = await Artifact.findByIdAndUpdate(
       req.params.id,
       req.body,
-      { new: true }  // Return the updated document
+      { new: true }
     );
     if (!updatedArtifact) {
       return res.status(404).json({ message: "Artifact not found" });

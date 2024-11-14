@@ -8,15 +8,13 @@ html
 
     .container-fluid
       .row
-        // Step 5: Iterate over each item in results (artifacts passed from the controller)
         each item, index in results
           .col-sm-4
-            h2 #{item.artifact_name}  
+            h2 #{item.artifact_name}
             p Age: #{item.age} years
             p Origin: #{item.origin}
-            button(class="buy-btn" data-index=index data-name=item.artifact_type) Buy
+            button(class="buy-btn btn btn-primary mt-2", data-index=index data-name=item.artifact_type) Buy
 
-    // Add a script to bind events for the buy buttons
     script.
       document.addEventListener('DOMContentLoaded', function() {
         const buyButtons = document.querySelectorAll('.buy-btn');
