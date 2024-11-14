@@ -13,7 +13,7 @@ var app = express();
 const mongoose = require('mongoose');
 const Artifact = require("./models/artifacts");
 const resourceRouter = require('./routes/resource');
-const resourceRouter = require('./routes/resource');
+
 
 app.use('/resource', resourceRouter);
 
