@@ -1,4 +1,4 @@
-const Artifact = require('../models/artifact'); // Replace with correct path
+const Artifact = require('../models/artifacts'); // Replace with correct path
 const artifacts = require('../models/artifacts');
 
 // List all gadgets
