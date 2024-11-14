@@ -11,6 +11,8 @@ var artifactsRouter = require('./routes/artifacts'); // Add the artifacts router
 var pickRouter = require('./routes/pick');
 var app = express();
 const mongoose = require('mongoose');
+const Artifact = require("./models/artifact");
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -34,6 +36,26 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
+async function recreateDB() {
+  // Delete all existing artifacts
+  await Artifact.deleteMany();
+
+  // Create new artifact instances
+  let instance1 = new Artifact({ artifact_type: "vase", origin: "Greece", age: 2000 });
+  let instance2 = new Artifact({ artifact_type: "sword", origin: "Japan", age: 800 });
+  let instance3 = new Artifact({ artifact_type: "painting", origin: "Italy", age: 500 });
+
+  // Save each instance to the database
+  await instance1.save();
+  await instance2.save();
+  await instance3.save();
+
+  console.log("Database seeded with artifacts!");
+}
+let reseed = true;  // Set to false to prevent reseeding
+if (reseed) {
+  recreateDB();
+}
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
