@@ -1,3 +1,4 @@
+// routes/resource.js
 var express = require('express');
 var router = express.Router();
 
@@ -7,8 +8,8 @@ var artifact_controller = require('../controllers/artifactsController');
 // API Route
 router.get('/', api_controller.api);
 
-// Gadget Routes
-router.get('/artifacts', artifact_controller.artifact_list);  
+// Artifact Routes
+router.get('/artifacts', artifact_controller.artifact_list);  // Route to get all artifacts
 router.post('/artifacts', artifact_controller.artifact_create_post); 
 router.get('/artifacts/:id', artifact_controller.artifact_detail); 
 router.put('/artifacts/:id', artifact_controller.artifact_update_put); 
