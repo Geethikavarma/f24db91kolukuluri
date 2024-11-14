@@ -11,12 +11,18 @@ var artifactsRouter = require('./routes/artifacts'); // Add the artifacts router
 var pickRouter = require('./routes/pick');
 var app = express();
 const mongoose = require('mongoose');
-const Artifact = require("./models/artifact");
+const Artifact = require("./models/artifacts");
+const resourceRouter = require('./routes/resource');
+const resourceRouter = require('./routes/resource');
+
+app.use('/resource', resourceRouter);
 
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+app.use('/resource', resourceRouter);
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -29,7 +35,8 @@ app.use('/artifacts', artifactsRouter); // Route for /artifacts
 app.use('/pick', pickRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-mongoose.connect(process.env.MONGO_CON, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.MONGO_CON);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
