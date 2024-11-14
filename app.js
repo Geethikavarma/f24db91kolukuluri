@@ -26,7 +26,7 @@ mongoose.connect(process.env.MONGO_CON, { useNewUrlParser: true, useUnifiedTopol
 
 // Middleware setup
 app.use(logger('dev'));
-app.use(express.json());
+app.use(express.json());  // Add body parser middleware to handle JSON payload
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
