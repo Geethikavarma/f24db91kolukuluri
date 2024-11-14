@@ -4,12 +4,16 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 require('dotenv').config(); // Load environment variables from .env file
+
+// Routes imports
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var gridRouter = require('./routes/grid');  // Ensure this file exists
 var artifactsRouter = require('./routes/artifacts');  // Add the artifacts router
 var pickRouter = require('./routes/pick');
 var resourceRouter = require('./routes/resource');  // Resource router
+
+// MongoDB imports
 const mongoose = require('mongoose');
 const Artifact = require("./models/artifacts");
 
@@ -31,7 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-// Routes
+// Routes setup
 app.use('/resource', resourceRouter);  // API for resource routes
 app.use('/grid', gridRouter);  // Route for /grid
 app.use('/artifacts', artifactsRouter);  // Route for /artifacts
@@ -51,7 +55,7 @@ if (reseed) {
     const instance2 = new Artifact({ artifact_type: "sword", origin: "Japan", age: 800 });
     const instance3 = new Artifact({ artifact_type: "painting", origin: "Italy", age: 500 });
 
-    // Save instances
+    // Save instances to MongoDB
     await instance1.save();
     await instance2.save();
     await instance3.save();
@@ -69,11 +73,11 @@ app.use(function(req, res, next) {
 
 // General error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
+  // Set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
+  // Render the error page
   res.status(err.status || 500);
   res.render('error');
 });
