@@ -43,8 +43,7 @@ app.use('/pick', pickRouter);  // Route for /pick
 app.use('/', indexRouter);  // Route for the homepage
 app.use('/users', usersRouter);  // Route for users
 
-// MongoDB Model for Artifact
-const Artifact = require('./models/artifacts');
+
 
 // PUT Method for updating an artifact
 app.put('/artifacts/:id', async (req, res) => {
