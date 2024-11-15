@@ -1,9 +1,8 @@
 // controllers/artifactsController.js
 const Artifact = require('../models/artifacts');
 
-// List all artifacts
+// List all artifacts (already implemented)
 exports.artifact_list = async function(req, res) {
-  console.log("Fetching artifact list");  // Debugging log
   try {
     const artifacts = await Artifact.find();
     res.json(artifacts);
@@ -12,7 +11,7 @@ exports.artifact_list = async function(req, res) {
   }
 };
 
-// Create a new artifact
+// Create a new artifact (already implemented)
 exports.artifact_create_post = async function(req, res) {
   try {
     const { artifact_type, origin, age } = req.body;
@@ -47,9 +46,11 @@ exports.artifact_update_put = async function(req, res) {
     if (!artifact) {
       return res.status(404).json({ message: "Artifact not found" });
     }
+
     if (req.body.artifact_type) artifact.artifact_type = req.body.artifact_type;
     if (req.body.origin) artifact.origin = req.body.origin;
     if (req.body.age) artifact.age = req.body.age;
+
     const updatedArtifact = await artifact.save();
     res.status(200).json(updatedArtifact);
   } catch (err) {
