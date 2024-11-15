@@ -5,9 +5,9 @@ const Artifact = require('../models/artifacts');
 exports.artifact_list = async function(req, res) {
   try {
     const artifacts = await Artifact.find();
-    res.status(200).json(artifacts);
+    res.json(artifacts);
   } catch (err) {
-    res.status(500).json({ message: `Error: ${err.message}` });
+    res.status(500).send({ error: 'Failed to fetch artifacts' });
   }
 };
 
