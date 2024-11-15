@@ -1,8 +1,9 @@
 // controllers/artifactsController.js
 const Artifact = require('../models/artifacts');
 
-// List all artifacts (already implemented)
+// List all artifacts
 exports.artifact_list = async function(req, res) {
+  console.log("Fetching artifact list");  // Debugging log
   try {
     const artifacts = await Artifact.find();
     res.json(artifacts);
@@ -11,7 +12,7 @@ exports.artifact_list = async function(req, res) {
   }
 };
 
-// Create a new artifact (already implemented)
+// Create a new artifact
 exports.artifact_create_post = async function(req, res) {
   try {
     const { artifact_type, origin, age } = req.body;
@@ -40,29 +41,21 @@ exports.artifact_detail = async function(req, res) {
 };
 
 // Update an existing artifact by ID
-// Update an existing artifact by ID
 exports.artifact_update_put = async function(req, res) {
   try {
-    // Find the artifact by ID
     let artifact = await Artifact.findById(req.params.id);
     if (!artifact) {
       return res.status(404).json({ message: "Artifact not found" });
     }
-
-    // Update fields if they are provided in the request body
     if (req.body.artifact_type) artifact.artifact_type = req.body.artifact_type;
     if (req.body.origin) artifact.origin = req.body.origin;
     if (req.body.age) artifact.age = req.body.age;
-
-    // Save the updated artifact
     const updatedArtifact = await artifact.save();
     res.status(200).json(updatedArtifact);
-
   } catch (err) {
     res.status(500).json({ message: `Error: ${err.message}` });
   }
 };
-
 
 // Delete an artifact by ID
 exports.artifact_delete = async function(req, res) {
