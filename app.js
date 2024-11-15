@@ -8,7 +8,7 @@ require('dotenv').config(); // Load environment variables from .env file
 // Routes imports
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var gridRouter = require('./routes/grid');  // Ensure this file exists
+var gridRouter = require('./routes/grid');
 var artifactsRouter = require('./routes/artifacts');  // Add the artifacts router
 var pickRouter = require('./routes/pick');
 var resourceRouter = require('./routes/resource');  // Resource router
@@ -42,6 +42,32 @@ app.use('/artifacts', artifactsRouter);  // Route for /artifacts
 app.use('/pick', pickRouter);  // Route for /pick
 app.use('/', indexRouter);  // Route for the homepage
 app.use('/users', usersRouter);  // Route for users
+
+// MongoDB Model for Artifact
+const Artifact = require('./models/artifacts');
+
+// PUT Method for updating an artifact
+app.put('/artifacts/:id', async (req, res) => {
+  try {
+    // Find the artifact by ID
+    let artifact = await Artifact.findById(req.params.id);
+    if (!artifact) {
+      return res.status(404).json({ message: 'Artifact not found' });
+    }
+
+    // Update the artifact with the provided data (in req.body)
+    if (req.body.artifact_type) artifact.artifact_type = req.body.artifact_type;
+    if (req.body.origin) artifact.origin = req.body.origin;
+    if (req.body.age) artifact.age = req.body.age;
+
+    // Save the updated artifact back to the database
+    const updatedArtifact = await artifact.save();
+    res.status(200).json(updatedArtifact);  // Return the updated artifact
+
+  } catch (err) {
+    res.status(500).json({ message: `Error: ${err.message}` });
+  }
+});
 
 // Seed the database with some artifacts (only if reseed is true)
 let reseed = true;  // Set to false to prevent reseeding

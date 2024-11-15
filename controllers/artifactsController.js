@@ -40,21 +40,29 @@ exports.artifact_detail = async function(req, res) {
 };
 
 // Update an existing artifact by ID
+// Update an existing artifact by ID
 exports.artifact_update_put = async function(req, res) {
   try {
-    const updatedArtifact = await Artifact.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }  // Returns the updated document
-    );
-    if (!updatedArtifact) {
+    // Find the artifact by ID
+    let artifact = await Artifact.findById(req.params.id);
+    if (!artifact) {
       return res.status(404).json({ message: "Artifact not found" });
     }
+
+    // Update fields if they are provided in the request body
+    if (req.body.artifact_type) artifact.artifact_type = req.body.artifact_type;
+    if (req.body.origin) artifact.origin = req.body.origin;
+    if (req.body.age) artifact.age = req.body.age;
+
+    // Save the updated artifact
+    const updatedArtifact = await artifact.save();
     res.status(200).json(updatedArtifact);
+
   } catch (err) {
     res.status(500).json({ message: `Error: ${err.message}` });
   }
 };
+
 
 // Delete an artifact by ID
 exports.artifact_delete = async function(req, res) {
