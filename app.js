@@ -1,23 +1,23 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-require('dotenv').config(); // Load environment variables from .env file
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+require('dotenv').config();
 
 // Routes imports
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var gridRouter = require('./routes/grid');
-var artifactsRouter = require('./routes/artifacts');  // Add the artifacts router
-var pickRouter = require('./routes/pick');
-var resourceRouter = require('./routes/resource');  // Resource router
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const gridRouter = require('./routes/grid');
+const artifactsRouter = require('./routes/artifacts');
+const pickRouter = require('./routes/pick');
+const resourceRouter = require('./routes/resource');
 
 // MongoDB imports
 const mongoose = require('mongoose');
 const Artifact = require("./models/artifacts");
 
-var app = express();
+const app = express();
 
 // MongoDB connection setup
 mongoose.connect(process.env.MONGO_CON, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -26,7 +26,7 @@ mongoose.connect(process.env.MONGO_CON, { useNewUrlParser: true, useUnifiedTopol
 
 // Middleware setup
 app.use(logger('dev'));
-app.use(express.json());  // Add body parser middleware to handle JSON payload
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -36,29 +36,28 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 // Routes setup
-app.use('/resource', resourceRouter);  // API for resource routes
-app.use('/grid', gridRouter);  // Route for /grid
-app.use('/artifacts', artifactsRouter);  // Route for /artifacts
-app.use('/pick', pickRouter);  // Route for /pick
-app.use('/', indexRouter);  // Route for the homepage
-app.use('/users', usersRouter);  // Route for users
+app.use('/resource', resourceRouter);
+app.use('/grid', gridRouter);
+app.use('/artifacts', artifactsRouter);
+app.use('/pick', pickRouter);
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
 
 // Error handler for 404
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   next(createError(404));
 });
 
 // General error handler
-app.use(function(err, req, res, next) {
-  // Set locals, only providing error in development
+app.use((err, req, res, next) => {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // Render the error page
   res.status(err.status || 500);
   res.render('error');
 });
-let reseed = true;  // Set to false to prevent reseeding
+
+// Reseed database on startup
+let reseed = true;
 if (reseed) {
   async function recreateDB() {
     await Artifact.deleteMany();
@@ -74,12 +73,7 @@ if (reseed) {
 }
 
 // MongoDB Connection Status
-mongoose.connection.on('connected', () => {
-  console.log('Connected to MongoDB');
-});
-
-mongoose.connection.on('error', (err) => {
-  console.error(`MongoDB connection error: ${err}`);
-});
+mongoose.connection.on('connected', () => console.log('Connected to MongoDB'));
+mongoose.connection.on('error', (err) => console.error(`MongoDB connection error: ${err}`));
 
 module.exports = app;

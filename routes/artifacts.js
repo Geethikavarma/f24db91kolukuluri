@@ -1,6 +1,5 @@
-// routes/artifacts.js
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const artifactsController = require('../controllers/artifactsController');
 
 // Define the route for fetching all artifacts

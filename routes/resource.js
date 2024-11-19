@@ -1,14 +1,16 @@
-// routes/resource.js
 const express = require('express');
 const router = express.Router();
-const api_controller = require('../controllers/api');
-const artifact_controller = require('../controllers/artifactsController');
+const apiController = require('../controllers/api');
+const artifactController = require('../controllers/artifactsController');
 
-router.get('/', api_controller.api);
-router.get('/artifacts', artifact_controller.artifact_list);
-router.post('/artifacts', artifact_controller.artifact_create_post);
-router.get('/artifacts/:id', artifact_controller.artifact_detail);
-router.put('/artifacts/:id', artifact_controller.artifact_update_put);
-router.delete('/artifacts/:id', artifact_controller.artifact_delete);
+// Base API route
+router.get('/', apiController.api);
+
+// Artifact-specific routes
+router.get('/artifacts', artifactController.artifact_list);
+router.post('/artifacts', artifactController.artifact_create_post);
+router.get('/artifacts/:id', artifactController.artifact_detail);
+router.put('/artifacts/:id', artifactController.artifact_update_put);
+router.delete('/artifacts/:id', artifactController.artifact_delete);
 
 module.exports = router;
