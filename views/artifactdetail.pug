@@ -1,14 +1,13 @@
 extends layout
 
 block content
-  h1= title
-
-  pre= JSON.stringify(artifact, null, 2) <!-- Display the entire artifact object -->
+  h1= Artifact Detail
 
   .container
     .row
       .col-md-4.font-weight-bold Artifact ID:
-      .col-md-8.artifactAttr #{artifact._id}
+      .col-md-8.artifactAttr #{artifact._id} 
+
     .row
       .col-md-4.font-weight-bold Artifact Type:
       .col-md-8.artifactAttr #{artifact.artifact_type}

@@ -1,6 +1,6 @@
+// Render the detail page for a single artifact
 const mongoose = require('mongoose');
 const Artifact = require('../models/artifacts');
-
 // List all artifacts
 // Render a page to list all artifacts
 exports.artifact_list = async function (req, res) {
@@ -83,6 +83,8 @@ exports.artifact_delete = async function(req, res) {
   }
 };
 
+
+
 // Render the detail page for a single artifact
 exports.artifact_view_one_Page = async function (req, res) {
   console.log("Rendering detail page for ID:", req.query.id);
@@ -98,11 +100,12 @@ exports.artifact_view_one_Page = async function (req, res) {
       return res.status(404).send({ message: "Artifact not found" });
     }
 
-    console.log("Artifact data being sent to the template:", artifact);
-    // Render the Pug view with the artifact data
+    console.log("Artifact data being passed to the template:", artifact);  // Log artifact object
     res.render('artifactdetail', { title: 'Artifact Detail', artifact });
   } catch (err) {
+    console.error("Error fetching artifact:", err);
     res.status(500).send({ error: `Error: ${err.message}` });
   }
 };
+
 
