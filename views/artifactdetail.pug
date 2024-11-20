@@ -1,18 +1,18 @@
 extends layout
 
 block content
-  h1= title
+  h1= Artifact Detail
 
-  .container
-    .row
-      .col-md-4.font-weight-bold Artifact ID:
-      .col-md-8 #{artifact._id}
-    .row
-      .col-md-4.font-weight-bold Artifact Type:
-      .col-md-8 #{artifact.artifact_type}
-    .row
-      .col-md-4.font-weight-bold Origin:
-      .col-md-8 #{artifact.origin}
-    .row
-      .col-md-4.font-weight-bold Age:
-      .col-md-8 #{artifact.age} years
+  div
+    div.row
+      div(class='artifactAttr') Artifact ID:
+      div #{toShow._id}
+    div.row
+      div(class='artifactAttr') Artifact Type:
+      div #{toShow.artifact_type}
+    div.row
+      div(class='artifactAttr') Artifact Origin:
+      div #{toShow.origin}
+    div.row
+      div(class='artifactAttr') Artifact Age:
+      div #{toShow.age} years
