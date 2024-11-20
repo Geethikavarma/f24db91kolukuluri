@@ -21,12 +21,13 @@ const app = express();
 
 // MongoDB connection setup
 mongoose.connect(process.env.MONGO_CON, {
-  connectTimeoutMS: 30000, // Increase timeout to 30 seconds
+  connectTimeoutMS: 30000, // 30-second timeout
+  socketTimeoutMS: 30000,  // 30-second socket timeout
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 })
   .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error(`MongoDB connection error: ${err}`));
-
-
+  .catch(err => console.error('MongoDB connection error:', err));
 // MongoDB connection status and reseeding logic
 const db = mongoose.connection;
 
