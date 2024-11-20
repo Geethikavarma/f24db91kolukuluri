@@ -70,3 +70,16 @@ exports.artifact_delete = async function(req, res) {
     res.status(500).json({ message: `Error: ${err.message}` });
   }
 };
+// Render the detail page for a single artifact
+exports.artifact_view_one_Page = async function (req, res) {
+  console.log("Rendering detail page for ID: " + req.query.id);
+  try {
+    const artifact = await Artifact.findById(req.query.id);
+    if (!artifact) {
+      return res.status(404).send({ message: "Artifact not found" });
+    }
+    res.render('artifactdetail', { title: 'Artifact Detail', artifact });
+  } catch (err) {
+    res.status(500).send({ error: `Error: ${err.message}` });
+  }
+};

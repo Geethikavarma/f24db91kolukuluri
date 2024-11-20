@@ -18,6 +18,7 @@ const mongoose = require('mongoose');
 const Artifact = require("./models/artifacts");
 
 const app = express();
+const artifactsRouter = require('./routes/artifacts');
 
 // MongoDB connection setup
 mongoose.connect(process.env.MONGO_CON, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -34,6 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // View engine setup (pug)
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+app.use('/artifacts', artifactsRouter);
 
 // Routes setup
 app.use('/resource', resourceRouter);

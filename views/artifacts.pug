@@ -30,3 +30,19 @@ html
       function buy(index, name) {
         alert("You purchased item " + index + ": " + name);
       }
+extends layout
+
+block content
+  div.row
+    div(class='artifactAttr') Artifact ID:
+    div #{artifact._id}
+  div.row
+    div(class='artifactAttr') Artifact Type:
+    div #{artifact.artifact_type}
+  div.row
+    div(class='artifactAttr') Artifact Origin:
+    div #{artifact.origin}
+  div.row
+    div(class='artifactAttr') Artifact Age:
+    div #{artifact.age}
+
