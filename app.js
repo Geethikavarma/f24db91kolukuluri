@@ -9,13 +9,13 @@ require('dotenv').config();
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const gridRouter = require('./routes/grid');
-const artifactsRouter = require('./routes/artifacts');
+const artifactsRouter = require('./routes/artifacts'); // Artifacts routes
 const pickRouter = require('./routes/pick');
 const resourceRouter = require('./routes/resource');
 
 // MongoDB imports
 const mongoose = require('mongoose');
-const Artifact = require("./models/artifacts");
+const Artifact = require('./models/artifacts');
 
 const app = express();
 
@@ -28,6 +28,7 @@ mongoose.connect(process.env.MONGO_CON, {
 })
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
+
 // MongoDB connection status and reseeding logic
 const db = mongoose.connection;
 
@@ -77,7 +78,7 @@ app.set('view engine', 'pug');
 // Routes setup
 app.use('/resource', resourceRouter);
 app.use('/grid', gridRouter);
-app.use('/artifacts', artifactsRouter);
+app.use('/artifacts', artifactsRouter); // Artifacts routes support
 app.use('/pick', pickRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
