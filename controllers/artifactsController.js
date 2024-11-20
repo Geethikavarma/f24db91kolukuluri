@@ -84,6 +84,7 @@ exports.artifact_delete = async function(req, res) {
 exports.artifact_view_one_Page = async function (req, res) {
   console.log("Rendering detail page for ID: " + req.query.id);
 
+  // Validate ObjectId before querying
   if (!mongoose.Types.ObjectId.isValid(req.query.id)) {
     return res.status(400).send({ error: "Invalid artifact ID" });
   }
