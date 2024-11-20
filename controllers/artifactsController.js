@@ -1,7 +1,7 @@
-// controllers/artifactsController.js
+const mongoose = require('mongoose');
 const Artifact = require('../models/artifacts');
 
-// List all artifacts (already implemented)
+// List all artifacts
 exports.artifact_list = async function(req, res) {
   try {
     const artifacts = await Artifact.find();
@@ -11,7 +11,7 @@ exports.artifact_list = async function(req, res) {
   }
 };
 
-// Create a new artifact (already implemented)
+// Create a new artifact
 exports.artifact_create_post = async function(req, res) {
   try {
     const { artifact_type, origin, age } = req.body;
@@ -28,6 +28,9 @@ exports.artifact_create_post = async function(req, res) {
 
 // Get details of a specific artifact by ID
 exports.artifact_detail = async function(req, res) {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(400).json({ message: "Invalid artifact ID" });
+  }
   try {
     const artifact = await Artifact.findById(req.params.id);
     if (!artifact) {
@@ -41,6 +44,9 @@ exports.artifact_detail = async function(req, res) {
 
 // Update an existing artifact by ID
 exports.artifact_update_put = async function(req, res) {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(400).json({ message: "Invalid artifact ID" });
+  }
   try {
     let artifact = await Artifact.findById(req.params.id);
     if (!artifact) {
@@ -60,6 +66,9 @@ exports.artifact_update_put = async function(req, res) {
 
 // Delete an artifact by ID
 exports.artifact_delete = async function(req, res) {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(400).json({ message: "Invalid artifact ID" });
+  }
   try {
     const deletedArtifact = await Artifact.findByIdAndDelete(req.params.id);
     if (!deletedArtifact) {
@@ -70,9 +79,15 @@ exports.artifact_delete = async function(req, res) {
     res.status(500).json({ message: `Error: ${err.message}` });
   }
 };
+
 // Render the detail page for a single artifact
 exports.artifact_view_one_Page = async function (req, res) {
   console.log("Rendering detail page for ID: " + req.query.id);
+
+  if (!mongoose.Types.ObjectId.isValid(req.query.id)) {
+    return res.status(400).send({ error: "Invalid artifact ID" });
+  }
+
   try {
     const artifact = await Artifact.findById(req.query.id);
     if (!artifact) {
