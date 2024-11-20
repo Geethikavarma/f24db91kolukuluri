@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1= title
+
+  .container
+    .row
+      .col-md-4.font-weight-bold Artifact ID:
+      .col-md-8 #{artifact._id}
+    .row
+      .col-md-4.font-weight-bold Artifact Type:
+      .col-md-8 #{artifact.artifact_type}
+    .row
+      .col-md-4.font-weight-bold Origin:
+      .col-md-8 #{artifact.origin}
+    .row
+      .col-md-4.font-weight-bold Age:
+      .col-md-8 #{artifact.age} years

@@ -84,7 +84,7 @@ exports.artifact_delete = async function(req, res) {
 exports.artifact_view_one_Page = async function (req, res) {
   console.log("Rendering detail page for ID: " + req.query.id);
 
-  // Validate ObjectId before querying
+  // Validate ObjectId format
   if (!mongoose.Types.ObjectId.isValid(req.query.id)) {
     return res.status(400).send({ error: "Invalid artifact ID" });
   }
@@ -94,8 +94,11 @@ exports.artifact_view_one_Page = async function (req, res) {
     if (!artifact) {
       return res.status(404).send({ message: "Artifact not found" });
     }
+
+    // Render the detail view
     res.render('artifactdetail', { title: 'Artifact Detail', artifact });
   } catch (err) {
     res.status(500).send({ error: `Error: ${err.message}` });
   }
 };
+
