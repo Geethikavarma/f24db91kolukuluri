@@ -2,14 +2,17 @@ const mongoose = require('mongoose');
 const Artifact = require('../models/artifacts');
 
 // List all artifacts
-exports.artifact_list = async function(req, res) {
+// Render a page to list all artifacts
+exports.artifact_list = async function (req, res) {
   try {
     const artifacts = await Artifact.find();
-    res.json(artifacts);
+    // Render the Pug template with the artifacts data
+    res.render('artifacts', { title: 'Artifacts List', results: artifacts });
   } catch (err) {
     res.status(500).send({ error: 'Failed to fetch artifacts' });
   }
 };
+
 
 // Create a new artifact
 exports.artifact_create_post = async function(req, res) {
@@ -96,7 +99,7 @@ exports.artifact_view_one_Page = async function (req, res) {
     }
 
     // Render the detail view
-    res.render('artifactdetail', { title: 'Artifact Detail', artifact });
+    res.render('artifactdetail', { title: 'Artifact Detail', toShow: artifact });
   } catch (err) {
     res.status(500).send({ error: `Error: ${err.message}` });
   }
