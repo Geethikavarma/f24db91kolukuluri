@@ -19,11 +19,45 @@ const Artifact = require("./models/artifacts");
 
 const app = express();
 
-
 // MongoDB connection setup
-mongoose.connect(process.env.MONGO_CON, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGO_CON)
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error(`MongoDB connection error: ${err}`));
+
+// MongoDB connection status and reseeding logic
+const db = mongoose.connection;
+
+db.on('connected', async () => {
+  console.log('Connected to MongoDB');
+  if (reseed) {
+    try {
+      await recreateDB();
+      console.log("Database reseeded successfully!");
+    } catch (err) {
+      console.error(`Error during database reseeding: ${err}`);
+    }
+  }
+});
+
+db.on('error', (err) => {
+  console.error(`MongoDB connection error: ${err}`);
+});
+
+// Function to reseed the database
+async function recreateDB() {
+  try {
+    await Artifact.deleteMany(); // Clear all artifacts
+    const instance1 = new Artifact({ artifact_type: "vase", origin: "Greece", age: 2000 });
+    const instance2 = new Artifact({ artifact_type: "sword", origin: "Japan", age: 800 });
+    const instance3 = new Artifact({ artifact_type: "painting", origin: "Italy", age: 500 });
+    await instance1.save();
+    await instance2.save();
+    await instance3.save();
+    console.log("Database seeded with artifacts!");
+  } catch (err) {
+    throw new Error(`Reseeding error: ${err.message}`);
+  }
+}
 
 // Middleware setup
 app.use(logger('dev'));
@@ -32,10 +66,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// View engine setup (pug)
+// View engine setup (Pug)
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-
 
 // Routes setup
 app.use('/resource', resourceRouter);
@@ -58,24 +91,7 @@ app.use((err, req, res, next) => {
   res.render('error');
 });
 
-// Reseed database on startup
-let reseed = true;
-if (reseed) {
-  async function recreateDB() {
-    await Artifact.deleteMany();
-    const instance1 = new Artifact({ artifact_type: "vase", origin: "Greece", age: 2000 });
-    const instance2 = new Artifact({ artifact_type: "sword", origin: "Japan", age: 800 });
-    const instance3 = new Artifact({ artifact_type: "painting", origin: "Italy", age: 500 });
-    await instance1.save();
-    await instance2.save();
-    await instance3.save();
-    console.log("Database seeded with artifacts!");
-  }
-  recreateDB();
-}
-
-// MongoDB Connection Status
-mongoose.connection.on('connected', () => console.log('Connected to MongoDB'));
-mongoose.connection.on('error', (err) => console.error(`MongoDB connection error: ${err}`));
+// Set reseeding flag
+const reseed = true;
 
 module.exports = app;
