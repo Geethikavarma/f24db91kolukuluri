@@ -85,7 +85,7 @@ exports.artifact_delete = async function(req, res) {
 
 // Render the detail page for a single artifact
 exports.artifact_view_one_Page = async function (req, res) {
-  console.log("Rendering detail page for ID: " + req.query.id);
+  console.log("Rendering detail page for ID:", req.query.id);
 
   // Validate ObjectId format
   if (!mongoose.Types.ObjectId.isValid(req.query.id)) {
@@ -98,8 +98,9 @@ exports.artifact_view_one_Page = async function (req, res) {
       return res.status(404).send({ message: "Artifact not found" });
     }
 
-    // Render the detail view
-    res.render('artifactdetail', { title: 'Artifact Detail', toShow: artifact });
+    console.log("Artifact data being sent to the template:", artifact);
+    // Render the Pug view with the artifact data
+    res.render('artifactdetail', { title: 'Artifact Detail', artifact });
   } catch (err) {
     res.status(500).send({ error: `Error: ${err.message}` });
   }

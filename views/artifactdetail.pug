@@ -3,6 +3,8 @@ extends layout
 block content
   h1= title
 
+  pre= JSON.stringify(artifact, null, 2) <!-- Display the entire artifact object -->
+
   .container
     .row
       .col-md-4.font-weight-bold Artifact ID:
