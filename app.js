@@ -20,9 +20,12 @@ const Artifact = require("./models/artifacts");
 const app = express();
 
 // MongoDB connection setup
-mongoose.connect(process.env.MONGO_CON)
+mongoose.connect(process.env.MONGO_CON, {
+  connectTimeoutMS: 30000, // Increase timeout to 30 seconds
+})
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error(`MongoDB connection error: ${err}`));
+
 
 // MongoDB connection status and reseeding logic
 const db = mongoose.connection;
