@@ -1,17 +1,15 @@
-doctype html
-html
-  head
-    title #{title}
-    link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
-  body
-    h1 #{title}
+extends layout
 
-    .container
-      .row
-        each item in results
-          .col-md-4
-            h2 #{item.artifact_type}
-            p Id: #{item._id}
-            p Age: #{item.age} years
-            p Origin: #{item.origin}
-            a(href=`/artifacts/detail?id=${item._id}` class="btn btn-info mt-2") View Details
+block content
+  h1= title
+
+  div
+    each artifact in results
+      div.card(class='artifact-card')
+        div.card-body
+          h5.card-title #{artifact.name}
+          p.card-text Origin: #{artifact.origin}
+          p.card-text Age: #{artifact.age} years
+          a.btn.btn-primary(href=`/artifact/${artifact._id}`) View Details
+          a.btn.btn-secondary(href=`/artifact/update?id=${artifact._id}`) Update
+          a.btn.btn-danger(href=`/artifact/delete?id=${artifact._id}`) Delete

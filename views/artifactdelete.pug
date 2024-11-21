@@ -1,0 +1,48 @@
+extends layout
+
+block content
+  h1= title
+  if (toShow == null)
+    h2 No artifact to delete
+  else
+    - let artifactId = toShow._id
+    - let name = toShow.name
+    - let origin = toShow.origin
+    - let age = toShow.age
+    - let actionid = "/resource/artifacts/" + artifactId
+    script let actionid = "#{actionid}"
+    div
+      div.row
+        div(class='artifactAttr mr-3') Artifact ID:
+        div #{artifactId}
+      div.row
+        div(class='artifactAttr mr-3') Name:
+        div #{name}
+      div.row
+        div(class='artifactAttr mr-3') Origin:
+        div #{origin}
+      div.row
+        div(class='artifactAttr mr-3') Age:
+        div #{age}
+    button(class="btn btn-danger m-2" onclick="deleteOnId()") Delete
+    button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
+
+  script.
+    function cancel() {
+      window.location.href = '/artifacts';
+    }
+
+  script.
+    function deleteOnId() {
+      fetch(actionid, {
+        method: 'DELETE'
+      })
+      .then((resp) => resp.json())
+      .then((body) => {
+        alert("Delete succeeded");
+        window.location.href = '/artifacts';
+      })
+      .catch((error) => {
+        alert("Delete failed: " + error);
+      });
+    }

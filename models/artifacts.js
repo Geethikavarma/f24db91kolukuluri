@@ -1,5 +1,6 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+module.exports = mongoose.model('Artifact', artifactSchema);
+const mongoose = require("mongoose");
+
 
 const artifactSchema = new Schema({
     artifact_type: { type: String, required: true },
@@ -7,4 +8,5 @@ const artifactSchema = new Schema({
     age: { type: Number, required: true },
 });
 
-module.exports = mongoose.model('Artifact', artifactSchema);
+
+module.exports = mongoose.model("Artifact", artifactSchema);

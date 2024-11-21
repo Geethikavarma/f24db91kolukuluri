@@ -1,33 +1,32 @@
 extends layout
+
 block content
-h1= Artifact Create
-form(id='ArtifactForm', action="/artifacts", method="POST")
-div.form-group
-label.artifactAttr(for='artifact_type') artifact type
-input#artifact_type(type='text', name='artifact_type')
-div.form-group
-label.artifactAttr(for='size') artifact size
-input#size(type='text', name='size')
-div.form-group
-label.artifactAttr(for='cost') artifact cost
-input#cost(type='number', name='cost')
-input(type="submit")
-script.
-document.forms['artifactForm'].addEventListener('submit', (event) => {
-event.preventDefault();
+  h1= title
+  form(id='ArtifactForm', action="/resource/artifacts", method="POST")
+    div.form-group
+      label(for='name') Artifact Name
+      input#name(type='text', name='name', required=true)
+    div.form-group
+      label(for='origin') Origin
+      input#origin(type='text', name='origin', required=true)
+    div.form-group
+      label(for='age') Age (in years)
+      input#age(type='number', name='age', required=true)
+    input(type="submit", value="Create")
 
-fetch(event.target.action, {
-method: 'POST',
-body: new URLSearchParams(new FormData(event.target)) // event.target is the form
-}).then((resp) => {
-return resp.json(); 
-}).then((body) => {
-alert("Save succeded")
-
-}).catch((error) => {
-
-alert("Save failed " + error )
-});
-});
-
-router.get('/update', artifact_controlers.artifact_update_Page);
+  script.
+    document.forms['ArtifactForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      fetch(event.target.action, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(event.target))
+      })
+      .then((resp) => resp.json())
+      .then((body) => {
+        alert("Save succeeded!");
+        window.location.href = '/artifacts';
+      })
+      .catch((error) => {
+        alert("Save failed: " + error);
+      });
+    });
