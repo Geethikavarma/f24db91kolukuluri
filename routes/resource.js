@@ -22,5 +22,5 @@ router.get('/update', heritageSiteController.heritageSite_update_Page);
 router.get('/artifacts/:id', heritageSiteController.heritageSite_detail);
 router.put('/artifacts/:id', heritageSiteController.heritageSite_update_put);
 router.delete('/artifacts/:id', heritageSiteController.heritageSite_delete);
-
+router.post('/create', artifactController.createResource);
 module.exports = router;
