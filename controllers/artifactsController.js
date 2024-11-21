@@ -60,33 +60,40 @@ const artifact_create_post = async function (req, res) {
 };
 
 
+// Render the page for creating a new artifact
+// Controller to render the artifact creation page
 exports.artifact_create_Page = function(req, res) {
-  console.log("Creating new artifact page");  // Log for debugging
+  console.log("create view");
   try {
-    // Render the 'artifactcreate.pug' view and pass the title as a dynamic variable
-    res.render('artifactcreate', { title: 'Create New Artifact' });
+    // Render the artifact create page with the title "Artifact Create"
+    res.render('artifactcreate', { title: 'Artifact Create' });
   } catch (err) {
-    // If there's an error while rendering, send a response with a 500 error
-    res.status(500).send({ error: 'Error rendering the page: ' + err.message });
+    res.status(500).send(`{'error': '${err}'}`);
   }
 };
-// Ensure other functions are defined (like artifact_create_post, etc.)
+
+
+// Handle form submission to create a new artifact
 exports.artifact_create_post = async function(req, res) {
   const { artifact_type, origin, age } = req.body;
-
+  
+  // Validate that all fields are provided
   if (!artifact_type || !origin || !age) {
     return res.status(400).json({ success: false, message: "All fields (artifact_type, origin, age) are required" });
   }
 
   try {
+    // Create and save the new artifact
     const newArtifact = new Artifact({ artifact_type, origin, age });
     await newArtifact.save();
+    
+    // Return a success response
     res.status(201).json({ success: true, message: "Artifact created successfully" });
   } catch (err) {
+    // If there's an error, send a response with the error message
     res.status(500).json({ success: false, message: `Error: ${err.message}` });
   }
 };
-
 // Update an existing artifact by ID
 const artifact_update_put = async function (req, res) {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
