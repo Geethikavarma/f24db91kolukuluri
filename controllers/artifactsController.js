@@ -28,7 +28,7 @@ const artifact_detail = async function (req, res) {
 };
 
 // Render the detail page for a single artifact
-exports.artifact_view_one_Page = async function (req, res) {
+const artifact_view_one_Page = async function (req, res) {
   const artifactId = req.query.id;
 
   console.log("Received artifact ID:", artifactId);
@@ -52,7 +52,6 @@ exports.artifact_view_one_Page = async function (req, res) {
     res.status(500).send({ error: `Error: ${err.message}` });
   }
 };
-
 
 // Create a new artifact
 const artifact_create_post = async function (req, res) {
@@ -111,7 +110,7 @@ const artifact_delete = async function (req, res) {
 module.exports = {
   artifact_list,
   artifact_detail,
-  artifact_view_one_Page,
+  artifact_view_one_Page, // Make sure this is properly exported
   artifact_create_post,
   artifact_update_put,
   artifact_delete,
