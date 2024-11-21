@@ -59,15 +59,17 @@ const artifact_create_post = async function (req, res) {
   }
 };
 
+// Render the page for creating a new artifact
 exports.artifact_create_Page = function(req, res) {
   console.log("create view");
   try {
-    res.render('costumecreate', { title: 'Create New Costume' });  // Renders the create costume page
+    res.render('artifactcreate', { title: 'Create New Artifact' });  // Renders the create artifact page
   } catch (err) {
     res.status(500);
     res.send(`{'error': '${err}'}`);
   }
 };
+
 // Handle form submission to create a new artifact
 exports.artifact_create_post = async function(req, res) {
   const { artifact_type, origin, age } = req.body;
@@ -131,4 +133,6 @@ module.exports = {
   artifact_create_post,
   artifact_update_put,
   artifact_delete,
+  artifact_create_Page,  // Ensure this is exported
+  artifact_create_post,
 };
