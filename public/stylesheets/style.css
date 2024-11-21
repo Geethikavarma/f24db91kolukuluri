@@ -4,11 +4,11 @@ body {
 }
 
 a {
-  color: #e50303;
+  color: #000000;
 }
 
 .artifactAttr {
-  background-color: rgb(0, 0, 0);
+  background-color: rgb(255, 248, 248);
   width: 120px;
  }
  
