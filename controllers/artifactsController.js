@@ -139,6 +139,6 @@ module.exports = {
   artifact_create_post,
   artifact_update_put,
   artifact_delete,
-
+  artifact_create_Page,
   artifact_create_post,
 };
