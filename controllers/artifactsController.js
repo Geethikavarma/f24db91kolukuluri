@@ -51,3 +51,13 @@ exports.artifact_view_one_Page = async function (req, res) {
     res.status(500).send({ error: `Error: ${err.message}` });
   }
 };
+
+module.exports = {
+  artifact_list,
+  artifact_detail,
+  artifact_view_one_Page,
+  artifact_create_post,
+  artifact_update_put,
+  artifact_delete,
+};
+
