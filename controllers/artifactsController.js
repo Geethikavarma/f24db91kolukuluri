@@ -59,6 +59,33 @@ const artifact_create_post = async function (req, res) {
   }
 };
 
+exports.artifact_create_Page = function(req, res) {
+  console.log("create view");
+  try {
+    res.render('costumecreate', { title: 'Create New Costume' });  // Renders the create costume page
+  } catch (err) {
+    res.status(500);
+    res.send(`{'error': '${err}'}`);
+  }
+};
+// Handle form submission to create a new artifact
+exports.artifact_create_post = async function(req, res) {
+  const { artifact_type, origin, age } = req.body;
+
+  if (!artifact_type || !origin || !age) {
+    return res.status(400).json({ success: false, message: "All fields (artifact_type, origin, age) are required" });
+  }
+
+  try {
+    const newArtifact = new Artifact({ artifact_type, origin, age });
+    await newArtifact.save();
+
+    res.status(201).json({ success: true, message: "Artifact created successfully" });
+  } catch (err) {
+    res.status(500).json({ success: false, message: `Error: ${err.message}` });
+  }
+};
+
 // Update an existing artifact by ID
 const artifact_update_put = async function (req, res) {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {

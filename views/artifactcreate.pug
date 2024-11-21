@@ -1,0 +1,47 @@
+extends layout
+
+block content
+  h1= title
+  .container
+    .row
+      .col-md-6.offset-md-3
+        form#artifact-create-form(action='/artifacts/create' method='POST')
+          .form-group
+            label(for='artifact_type') Artifact Type:
+            input#artifact_type.form-control(type='text' name='artifact_type' required)
+          .form-group
+            label(for='origin') Origin:
+            input#origin.form-control(type='text' name='origin' required)
+          .form-group
+            label(for='age') Age (in years):
+            input#age.form-control(type='number' name='age' required)
+          button.btn.btn-primary(type='submit') Create Artifact
+
+  script.
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('artifact-create-form');
+      
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();  // Prevent the default form submission
+        
+        const formData = new FormData(form);
+        
+        // Send the form data to the server using fetch API
+        fetch('/artifacts/create', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert('Artifact created successfully!');
+            window.location.href = '/artifacts';  // Redirect to the list of artifacts
+          } else {
+            alert('Error creating artifact: ' + data.message);
+          }
+        })
+        .catch(error => {
+          alert('Error: ' + error.message);
+        });
+      });
+    });
