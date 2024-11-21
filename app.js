@@ -16,8 +16,11 @@ var resourceRouter = require('./routes/resource');  // Resource router
 // MongoDB imports
 const mongoose = require('mongoose');
 
+// MongoDB connection setup
 mongoose.connect('mongodb+srv://ajithanarra24:ugekUdGXDkr3vqem@cluster0.m85be.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
-  serverSelectionTimeoutMS: 10000,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 10000, // Increase timeout for server selection
 }).then(() => {
   console.log('Connected to MongoDB Atlas');
 }).catch((err) => {
@@ -27,11 +30,9 @@ const Artifact = require("./models/artifacts");
 
 var app = express();
 
-// MongoDB connection setup
-
 // Middleware setup
 app.use(logger('dev'));
-app.use(express.json());  // Add body parser middleware to handle JSON payload
+app.use(express.json()); // Add body parser middleware to handle JSON payload
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -63,28 +64,41 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-let reseed = true;  // Set to false to prevent reseeding
-if (reseed) {
-  async function recreateDB() {
-    await Artifact.deleteMany();
-    const instance1 = new Artifact({ artifact_type: "vase", origin: "Greece", age: 2000 });
-    const instance2 = new Artifact({ artifact_type: "sword", origin: "Japan", age: 800 });
-    const instance3 = new Artifact({ artifact_type: "painting", origin: "Italy", age: 500 });
-    await instance1.save();
-    await instance2.save();
-    await instance3.save();
-    console.log("Database seeded with artifacts!");
+
+// Ensure the database is seeded only after the connection is established
+mongoose.connection.once('open', async () => {
+  console.log('MongoDB connection is open');
+
+  // Database seeding logic
+  let reseed = true; // Set to false to prevent reseeding
+  if (reseed) {
+    try {
+      console.log('Reseeding database...');
+      await Artifact.deleteMany();
+      const instance1 = new Artifact({ artifact_type: "vase", origin: "Greece", age: 2000 });
+      const instance2 = new Artifact({ artifact_type: "sword", origin: "Japan", age: 800 });
+      const instance3 = new Artifact({ artifact_type: "painting", origin: "Italy", age: 500 });
+      await instance1.save();
+      await instance2.save();
+      await instance3.save();
+      console.log("Database seeded with artifacts!");
+    } catch (err) {
+      console.error('Error while seeding database:', err);
+    }
   }
-  recreateDB();
-}
+});
 
 // MongoDB Connection Status
 mongoose.connection.on('connected', () => {
-  console.log('Connected to MongoDB');
+  console.log('Mongoose connected to MongoDB');
 });
 
 mongoose.connection.on('error', (err) => {
-  console.error(`MongoDB connection error: ${err}`);
+  console.error(`Mongoose connection error: ${err}`);
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.log('Mongoose disconnected');
 });
 
 module.exports = app;
