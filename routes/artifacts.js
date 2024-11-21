@@ -1,30 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const artifactControllers = require('../controllers/artifactsController');
+const artifactsController = require('../controllers/artifacts');
 
+// Route to view all heritage sites in a web page
+router.get('/', artifactsController.artifacts_view_all_Page);
 
-// Define route for fetching all artifacts
-router.get('/', artifactControllers.artifact_list);
+router.get('/create', (req, res) => res.render('artifacts_create_form'));
+/* GET delete heritage site page */
+router.get('/delete', artifactsController.artifacts_delete_Page);
 
-// Define route for fetching a specific artifact by ID (JSON response)
-router.get('/:id', artifactControllers.artifact_detail);
-
-// Define route for viewing details of an artifact (renders Pug view)
-router.get('/detail', artifactControllers.artifact_detail); 
-
-// Define the route for creating an artifact
-router.post('/', artifactControllers.artifact_create_post);
-
-// Define the route for updating an artifact by ID
-router.put('/:id', artifactControllers.artifact_update_put);
-
-// Route to render the page to create a new artifact
-router.get('/create', artifactControllers.artifact_create_Page);
-
-// Route to handle form submission for creating a new artifact
-router.post('/create', artifactControllers.artifact_create_post);
-
-// Define the route for deleting an artifact by ID
-router.delete('/:id', artifactControllers.artifact_delete);
-
+// Export the router
 module.exports = router;
