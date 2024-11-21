@@ -8,6 +8,19 @@ const heritageSiteController = require('../controllers/artifactsController');
 // Base API route
 router.get('/', api_controller.api);
 
+
+// Example of a POST route handler
+router.post('/example', (req, res) => {
+  // Handle the POST request
+  res.send('POST request handled');
+});
+
+router.post('/path', (req, res) => {
+    res.json({ message: 'POST request received' });
+  });
+
+
+
 // API routes for Heritage Site
 router.post('/artifacts', heritageSiteController.heritageSite_create_post);
 router.get('/artifacts', heritageSiteController.heritageSite_list);
