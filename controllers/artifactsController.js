@@ -12,8 +12,8 @@ const artifact_list = async function (req, res) {
 };
 
 // Get details of a specific artifact by ID
-exports.artifact_detail = async function (req, res) {
-  const artifactId = req.query.id;  // Get the artifact ID from query parameter
+const artifact_detail = async function (req, res) {
+  const artifactId = req.query.id;  // Get the artifact ID from the query parameter
 
   // Log the received ID for debugging purposes
   console.log("Received artifact ID:", artifactId);
@@ -37,32 +37,6 @@ exports.artifact_detail = async function (req, res) {
     console.log("Artifact data found:", artifact); // Log the artifact data
 
     // Render the artifact detail page
-    res.render('artifactdetail', { title: 'Artifact Detail', artifact });
-  } catch (err) {
-    console.error("Error fetching artifact:", err);
-    res.status(500).send({ error: `Error: ${err.message}` });
-  }
-};
-
-// Render the detail page for a single artifact
-const artifact_view_one_Page = async function (req, res) {
-  const artifactId = req.query.id;
-
-  console.log("Received artifact ID:", artifactId);
-
-  if (!mongoose.Types.ObjectId.isValid(artifactId)) {
-    console.log("Invalid ObjectId format detected");
-    return res.status(400).send({ error: "Invalid artifact ID format" });
-  }
-
-  try {
-    const artifact = await Artifact.findById(artifactId);
-    if (!artifact) {
-      console.log(`Artifact not found with ID: ${artifactId}`);
-      return res.status(404).send({ message: "Artifact not found" });
-    }
-
-    console.log("Artifact data found:", artifact);
     res.render('artifactdetail', { title: 'Artifact Detail', artifact });
   } catch (err) {
     console.error("Error fetching artifact:", err);
@@ -126,8 +100,7 @@ const artifact_delete = async function (req, res) {
 // Export all functions
 module.exports = {
   artifact_list,
-  artifact_detail,
-  artifact_view_one_Page, // Make sure this is properly exported
+  artifact_detail,  // Make sure this is included in module.exports
   artifact_create_post,
   artifact_update_put,
   artifact_delete,
