@@ -1,12 +1,13 @@
+const Artifact = require('./models/artifacts');
 
-const mongoose = require('mongoose'); 
-
-
-const artifactSchema = new mongoose.Schema({
-    artifact_type: { type: String, required: true },
-    origin: { type: String, required: true },
-    age: { type: Number, required: true },
+// Creating a new Artifact instance
+let newArtifact = new Artifact({
+    name: "Ancient Vase",
+    origin: "Greece",
+    age: 2500
 });
 
-
-module.exports = mongoose.model("Artifact", artifactSchema);
+// Save the instance to the database
+newArtifact.save()
+    .then(result => console.log("Artifact saved:", result))
+    .catch(error => console.error("Error saving artifact:", error));
