@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const artifactsController = require('../controllers/artifacts');
+const artifactsController = require('../controllers/artifactsController');
 
 // Route to view all heritage sites in a web page
 router.get('/', artifactsController.artifacts_view_all_Page);
