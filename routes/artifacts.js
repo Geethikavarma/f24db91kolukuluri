@@ -9,7 +9,11 @@ router.get('/', artifactsController.artifact_list);
 router.get('/:id', artifactsController.artifact_detail);
 
 // Define route for viewing details of an artifact
-router.get('/detail', artifactsController.artifact_view_one_Page);
+router.get('/detail', (req, res, next) => {
+    console.log("Route hit with ID:", req.query.id);
+    next();
+  }, artifactsController.artifact_view_one_Page);
+  
 
 // Define the route for creating an artifact
 router.post('/', artifactsController.artifact_create_post);
