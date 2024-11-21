@@ -60,21 +60,19 @@ const artifact_create_post = async function (req, res) {
 };
 
 
-// Render the page for creating a new artifact
-// Controller to render the artifact creation page
 
-exports.costume_create_Page = function(req, res) {
-  console.log("create view")
-  try{
-  res.render('artifactscreate', { title: 'Artifact Create'});
-  }
-  catch(err){
-  res.status(500)
-  res.send(`{'error': '${err}'}`);
-  }
-  };
-  
+// controllers/artifactController.js
 
+// controllers/artifactsController.js
+exports.artifacts_create_Page = function (req, res) {
+  console.log("create view");
+  try {
+      res.render('artifactcreate', { title: 'Arifact Create' });
+  } catch (err) {
+      res.status(500);
+      res.send(`{'error': '${err}'}`);
+  }
+};
 
 // Handle form submission to create a new artifact
 exports.artifact_create_post = async function(req, res) {
