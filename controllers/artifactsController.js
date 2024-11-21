@@ -31,7 +31,7 @@ const artifact_detail = async function (req, res) {
 exports.artifact_view_one_Page = async function (req, res) {
   const artifactId = req.query.id;
 
-  console.log("Received artifact ID:", artifactId); // Log the ID
+  console.log("Received artifact ID:", artifactId);
 
   if (!mongoose.Types.ObjectId.isValid(artifactId)) {
     console.log("Invalid ObjectId format detected");
@@ -52,6 +52,7 @@ exports.artifact_view_one_Page = async function (req, res) {
     res.status(500).send({ error: `Error: ${err.message}` });
   }
 };
+
 
 // Create a new artifact
 const artifact_create_post = async function (req, res) {
