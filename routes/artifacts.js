@@ -9,7 +9,7 @@ router.get('/', artifactsController.artifact_list);
 router.get('/:id', artifactsController.artifact_detail);
 
 // Define route for viewing details of an artifact (renders Pug view)
-router.get('/detail', artifactsController.artifact_view_one_Page);
+router.get('/detail', artifactsController.artifact_detail); 
 
 // Define the route for creating an artifact
 router.post('/', artifactsController.artifact_create_post);

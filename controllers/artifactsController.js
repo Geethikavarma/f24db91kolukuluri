@@ -12,18 +12,35 @@ const artifact_list = async function (req, res) {
 };
 
 // Get details of a specific artifact by ID
-const artifact_detail = async function (req, res) {
-  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-    return res.status(400).json({ message: "Invalid artifact ID" });
+exports.artifact_detail = async function (req, res) {
+  const artifactId = req.query.id;  // Get the artifact ID from query parameter
+
+  // Log the received ID for debugging purposes
+  console.log("Received artifact ID:", artifactId);
+
+  // Validate if the ID is a valid ObjectId
+  if (!mongoose.Types.ObjectId.isValid(artifactId)) {
+    console.log("Invalid ObjectId format detected");
+    return res.status(400).send({ error: "Invalid artifact ID format" });
   }
+
   try {
-    const artifact = await Artifact.findById(req.params.id);
+    // Fetch the artifact by its ID
+    const artifact = await Artifact.findById(artifactId);
+    
+    // If artifact is not found
     if (!artifact) {
-      return res.status(404).json({ message: "Artifact not found" });
+      console.log(`Artifact not found with ID: ${artifactId}`);
+      return res.status(404).send({ message: "Artifact not found" });
     }
-    res.status(200).json(artifact);
+
+    console.log("Artifact data found:", artifact); // Log the artifact data
+
+    // Render the artifact detail page
+    res.render('artifactdetail', { title: 'Artifact Detail', artifact });
   } catch (err) {
-    res.status(500).json({ message: `Error: ${err.message}` });
+    console.error("Error fetching artifact:", err);
+    res.status(500).send({ error: `Error: ${err.message}` });
   }
 };
 
