@@ -11,6 +11,7 @@ html
       each item in results
         .col-md-4
           h2 #{item.artifact_type}
+          p Id : #{item._id} 
           p Age: #{item.age} years
           p Origin: #{item.origin}
           a(href=`/artifacts/detail?id=${item._id}` class="btn btn-info mt-2") View Details
