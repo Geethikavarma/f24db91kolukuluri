@@ -60,18 +60,16 @@ const artifact_create_post = async function (req, res) {
 };
 
 
-
-
-
-exports.artifact_create_Page = function(req, res) {
-  console.log("Artifact Create Page is being called"); // To check if the route is being hit
+// artifactsController.js
+exports.artifact_create_Page = function (req, res) {
   try {
-    res.render('artifactscreate', { title: 'Create Artifact' });
+    console.log('Rendering artifact create page'); // Debugging log
+    res.render('artifactcreate', { title: 'Create Artifact' });
   } catch (err) {
-    res.status(500);
-    res.send(`Error: ${err.message}`);
+    res.status(500).send(`Error: ${err.message}`);
   }
 };
+
 
 // Handle form submission to create a new artifact
 exports.artifact_create_post = async function(req, res) {
