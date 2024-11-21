@@ -20,14 +20,12 @@ const Artifact = require('./models/artifacts');
 const app = express();
 
 // Set reseeding flag (set to true to reseed the database)
-const RESEED_DB = true;
+const reseed = true;
 
 // MongoDB connection setup
 mongoose.connect(process.env.MONGO_CON, {
   connectTimeoutMS: 30000, // 30-second timeout
   socketTimeoutMS: 30000,  // 30-second socket timeout
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
 })
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
@@ -36,14 +34,14 @@ mongoose.connect(process.env.MONGO_CON, {
 const db = mongoose.connection;
 
 db.on('connected', async () => {
-  console.log('Successfully connected to MongoDB');
+  console.log('Connected to MongoDB');
   // Only reseed if flag is set to true
-  if (RESEED_DB) {
+  if (reseed) {
     try {
       await recreateDB();
       console.log("Database reseeded successfully!");
     } catch (err) {
-      console.error(`Error during database reseeding: ${err.message}`);
+      console.error(`Error during database reseeding: ${err}`);
     }
   }
 });
@@ -57,15 +55,15 @@ async function recreateDB() {
   try {
     // Delete all existing artifacts
     await Artifact.deleteMany();
-
     // Seed the database with initial artifact data
-    const artifacts = [
-      { artifact_type: "vase", origin: "Greece", age: 2000 },
-      { artifact_type: "sword", origin: "Japan", age: 800 },
-      { artifact_type: "painting", origin: "Italy", age: 500 },
-    ];
+    const instance1 = new Artifact({ artifact_type: "vase", origin: "Greece", age: 2000 });
+    const instance2 = new Artifact({ artifact_type: "sword", origin: "Japan", age: 800 });
+    const instance3 = new Artifact({ artifact_type: "painting", origin: "Italy", age: 500 });
 
-    await Artifact.insertMany(artifacts);
+    // Save the artifact instances
+    await instance1.save();
+    await instance2.save();
+    await instance3.save();
     console.log("Database seeded with artifacts!");
   } catch (err) {
     throw new Error(`Reseeding error: ${err.message}`);
@@ -98,14 +96,10 @@ app.use((req, res, next) => {
 
 // General error handler
 app.use((err, req, res, next) => {
-  // Set locals, only providing error details in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // Render the error page
   res.status(err.status || 500);
   res.render('error');
 });
 
-// Export the app module
 module.exports = app;
