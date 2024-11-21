@@ -22,33 +22,35 @@ exports.artifact_view_all_Page = async function (req, res) {
 
 // Display details for a specific artifact
 exports.artifact_detail = async function (req, res) {
-    console.log("Detail of Artifact with ID:", req.params.id);
-    try {
-        const result = await Artifact.findById(req.params.id);
-        if (!result) {
-            res.status(404).json({ error: `Artifact document for ID ${req.params.id} not found` });  // JSON error for not found
-        } else {
-            res.status(200).json(result);  // JSON response for the artifact details
-        }
-    } catch (err) {
-        res.status(500).json({ error: `Error retrieving document for ID ${req.params.id}: ${err.message}` });  // Proper JSON error formatting
-    }
+  try {
+      const result = await Artifact.findById(req.params.id).exec();
+      if (!result) {
+          res.status(404).send(`{"error": "Artifact not found"}`);
+      } else {
+          res.send(result);
+      }
+  } catch (err) {
+      console.error('Error retrieving artifact:', err);  // Log detailed error
+      res.status(500).send(`{"error": "Error retrieving document: ${err.message}"}`);
+  }
 };
 
 // Create a new artifact (POST request)
 exports.artifact_create_post = async function (req, res) {
-    console.log(req.body);
-    let document = new Artifact({
-        name: req.body.name,
-        description: req.body.description,
-        origin: req.body.origin
-    });
-    try {
-        let result = await document.save();
-        res.status(201).json({ message: 'Artifact created successfully', artifact: result });  // JSON response with 201 status code for creation
-    } catch (err) {
-        res.status(500).json({ error: `Error creating artifact: ${err.message}` });  // JSON error response
-    }
+  console.log('Request Body:', req.body);  // Log the request body to debug
+
+  let document = new Artifact({
+      name: req.body.name,
+      description: req.body.description,
+      origin: req.body.origin,
+  });
+
+  try {
+      let result = await document.save();
+      res.send(result);  // Send back the saved document
+  } catch (err) {
+      res.status(500).send({ error: err.message });
+  }
 };
 
 // Render delete page for an artifact
