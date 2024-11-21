@@ -1,14 +1,75 @@
+/* style.css */
+
+/* General Body Style */
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #f9f9f9;
 }
 
-a {
-  color: #000000;
+/* Container and Row Styles */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding-top: 20px;
 }
 
-.artifactAttr {
-  background-color: rgb(255, 248, 248);
-  width: 120px;
- }
- 
+.row {
+  margin-bottom: 15px;
+}
+
+/* Font Weight and Text Styling */
+.font-weight-bold {
+  font-weight: bold;
+  color: #333;
+}
+
+.text-info {
+  color: #007bff;
+}
+
+/* Button Style */
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+/* Artifact Details Styling */
+.artifact-detail-section {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.artifact-detail-header {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.artifact-detail-row {
+  margin-bottom: 15px;
+}
+
+.artifact-detail-label {
+  font-weight: bold;
+  color: #f20c0c;
+}
+
+.artifact-detail-value {
+  color: #dce2e8;
+  background-color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 767px) {
+  .container {
+    padding: 20px;
+  }
+}
