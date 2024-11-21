@@ -37,7 +37,7 @@ exports.artifact_detail = async function (req, res) {
 
 // Create a new artifact (POST request)
 exports.artifact_create_post = async function (req, res) {
-  console.log('Request Body:', req.body);  // Log the request body to debug
+  console.log('Request Body:', req.body);  // Log request details for debugging
 
   let document = new Artifact({
       name: req.body.name,
@@ -49,6 +49,7 @@ exports.artifact_create_post = async function (req, res) {
       let result = await document.save();
       res.send(result);  // Send back the saved document
   } catch (err) {
+      console.error('Error during artifact creation:', err);  // Log detailed error
       res.status(500).send({ error: err.message });
   }
 };
@@ -81,20 +82,25 @@ exports.artifact_delete = async function (req, res) {
 
 // Update an artifact (PUT request)
 exports.artifact_update_put = async function (req, res) {
-    console.log(`Updating Artifact with ID: ${req.params.id}`);
-    try {
-        let toUpdate = await Artifact.findById(req.params.id);
-        if (req.body.name) toUpdate.name = req.body.name;
-        if (req.body.description) toUpdate.description = req.body.description;
-        if (req.body.origin) toUpdate.origin = req.body.origin;
+  console.log(`Updating Artifact with ID: ${req.params.id}`);
 
-        let result = await toUpdate.save();
-        res.status(200).json({ message: 'Artifact updated successfully', artifact: result });  // Success message with updated artifact in JSON format
-    } catch (err) {
-        res.status(500).json({ error: `Update for ID ${req.params.id} failed: ${err.message}` });  // JSON error response
-    }
+  try {
+      let toUpdate = await Artifact.findById(req.params.id).exec();
+      if (!toUpdate) {
+          return res.status(404).send({ error: `Artifact document for ID ${req.params.id} not found` });
+      }
+
+      if (req.body.name) toUpdate.name = req.body.name;
+      if (req.body.description) toUpdate.description = req.body.description;
+      if (req.body.origin) toUpdate.origin = req.body.origin;
+
+      let result = await toUpdate.save();
+      res.send(result);
+  } catch (err) {
+      console.error(`Update for ID ${req.params.id} failed:`, err);  // Log detailed error
+      res.status(500).send({ error: `Update for ID ${req.params.id} failed: ${err.message}` });
+  }
 };
-
 // Render page to create an artifact
 exports.artifact_create_Page = function (req, res) {
     console.log("Create artifact view");
