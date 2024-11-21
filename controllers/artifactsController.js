@@ -59,13 +59,15 @@ const artifact_create_post = async function (req, res) {
   }
 };
 
-// Render the page for creating a new artifact
+
 // Define the artifact_create_Page function to render the create page
 exports.artifact_create_Page = function(req, res) {
-  console.log("Creating new artifact page");
+  console.log("Creating new artifact page");  // Log for debugging
   try {
-    res.render('artifactcreate', { title: 'Create New Artifact' });  // Renders the artifactcreate.pug view
+    // Render the 'artifactcreate.pug' view and pass title as a dynamic variable
+    res.render('artifactcreate', { title: 'Create New Artifact' });
   } catch (err) {
+    // If there's an error while rendering, send a response with a 500 error
     res.status(500).send({ error: 'Error rendering the page: ' + err.message });
   }
 };
