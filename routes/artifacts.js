@@ -18,7 +18,7 @@ router.post('/', artifactsController.artifact_create_post);
 router.put('/:id', artifactsController.artifact_update_put);
 
 // Route to render the page to create a new artifact
-router.get('/create', artifactControllers.artifact_create_Page);
+router.get('/create', artifactsController.artifact_create_Page);
 
 // Route to handle form submission for creating a new artifact
 router.post('/create', artifactsController.artifact_create_post);
