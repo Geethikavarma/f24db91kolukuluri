@@ -28,10 +28,10 @@ const artifact_detail = async function (req, res) {
 };
 
 // Render the detail page for a single artifact
-const artifact_view_one_Page = async function (req, res) {
+exports.artifact_view_one_Page = async function (req, res) {
   const artifactId = req.query.id;
 
-  console.log("Received artifact ID:", artifactId);
+  console.log("Received artifact ID:", artifactId); // Log the ID
 
   if (!mongoose.Types.ObjectId.isValid(artifactId)) {
     console.log("Invalid ObjectId format detected");
