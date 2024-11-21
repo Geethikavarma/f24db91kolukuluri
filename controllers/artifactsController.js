@@ -60,17 +60,17 @@ const artifact_create_post = async function (req, res) {
 };
 
 // Render the page for creating a new artifact
+// Define the artifact_create_Page function to render the create page
 exports.artifact_create_Page = function(req, res) {
-  console.log("create view");
+  console.log("Creating new artifact page");
   try {
-    res.render('artifactcreate', { title: 'Create New Artifact' });  // Renders the create artifact page
+    res.render('artifactcreate', { title: 'Create New Artifact' });  // Renders the artifactcreate.pug view
   } catch (err) {
-    res.status(500);
-    res.send(`{'error': '${err}'}`);
+    res.status(500).send({ error: 'Error rendering the page: ' + err.message });
   }
 };
 
-// Handle form submission to create a new artifact
+// Ensure other functions are defined (like artifact_create_post, etc.)
 exports.artifact_create_post = async function(req, res) {
   const { artifact_type, origin, age } = req.body;
 
@@ -81,7 +81,6 @@ exports.artifact_create_post = async function(req, res) {
   try {
     const newArtifact = new Artifact({ artifact_type, origin, age });
     await newArtifact.save();
-
     res.status(201).json({ success: true, message: "Artifact created successfully" });
   } catch (err) {
     res.status(500).json({ success: false, message: `Error: ${err.message}` });
