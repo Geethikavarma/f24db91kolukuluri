@@ -1,47 +1,39 @@
 extends layout
 
 block content
-  h1= title
-  .container
-    .row
-      .col-md-6.offset-md-3
-        form#artifact-create-form(action='/artifacts/create' method='POST')
-          .form-group
-            label(for='artifact_type') Artifact Type:
-            input#artifact_type.form-control(type='text' name='artifact_type' required)
-          .form-group
-            label(for='origin') Origin:
-            input#origin.form-control(type='text' name='origin' required)
-          .form-group
-            label(for='age') Age (in years):
-            input#age.form-control(type='number' name='age' required)
-          button.btn.btn-primary(type='submit') Create Artifact
-
-  script.
-    document.addEventListener('DOMContentLoaded', function() {
-      const form = document.getElementById('artifact-create-form');
+  h1= artifact Create
+  form(id='ArtifactForm', action="/artifacts", method="POST")
+    div.form-group
+      label(for='artifact_type') Artifact type
+      input#artifact_type(type='text', name='artifact_type')
       
-      form.addEventListener('submit', function(event) {
-        event.preventDefault();  // Prevent the default form submission
-        
-        const formData = new FormData(form);
-        
-        // Send the form data to the server using fetch API
-        fetch('/artifacts/create', {
-          method: 'POST',
-          body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            alert('Artifact created successfully!');
-            window.location.href = '/artifacts';  // Redirect to the list of artifacts
-          } else {
-            alert('Error creating artifact: ' + data.message);
-          }
-        })
-        .catch(error => {
-          alert('Error: ' + error.message);
-        });
+    div.form-group
+      label(for='origin') Origin
+      input#origin(type='text', name='origin')
+      
+    div.form-group
+      label(for='age') Age
+      input#age(type='number', name='age')
+      
+    input(type="submit")
+    
+  script.
+    document.forms['ArtifactForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      // Optionally, show a loading spinner or message indicating form submission is in progress
+      fetch(event.target.action, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(event.target)) // Collect form data
+      })
+      .then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+      })
+      .then((body) => {
+        alert("Save succeeded");
+        // Optionally handle the server response body
+      })
+      .catch((error) => {
+        // Handle error, show user-friendly message
+        alert("Save failed: " + error);
       });
     });
