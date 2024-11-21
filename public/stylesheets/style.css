@@ -7,12 +7,12 @@ a {
   color: #00B7FF;
 }
 .artifactAttr {
-  background-color: lightyellow;
+  background-color: #f8f9fa;
   padding: 10px;
-  margin: 5px 0;
+  margin-bottom: 5px;
+  border: 1px solid #ddd;
   border-radius: 5px;
-  font-size: 1.1em;
-  font-weight: bold;
+  font-size: 1rem;
   color: #333;
 }
 

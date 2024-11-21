@@ -1,33 +1,17 @@
 doctype html
 html
   head
-    title Artifacts Search Results
+    title #{title}
     link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
   body
-    h1 Artifacts Search Results
+    h1 #{title}
 
     .container
-    .row
-      each item in results
-        .col-md-4
-          h2 #{item.artifact_type}
-          p Id : #{item._id} 
-          p Age: #{item.age} years
-          p Origin: #{item.origin}
-          a(href=`/artifacts/detail?id=${item._id}` class="btn btn-info mt-2") View Details
-
-    script.
-      document.addEventListener('DOMContentLoaded', function() {
-        const buyButtons = document.querySelectorAll('.buy-btn');
-        buyButtons.forEach(button => {
-          button.addEventListener('click', function() {
-            const index = button.getAttribute('data-index');
-            const name = button.getAttribute('data-name');
-            buy(index, name);
-          });
-        });
-      });
-
-      function buy(index, name) {
-        alert("You purchased item " + index + ": " + name);
-      }
+      .row
+        each item in results
+          .col-md-4
+            h2 #{item.artifact_type}
+            p Id: #{item._id}
+            p Age: #{item.age} years
+            p Origin: #{item.origin}
+            a(href=`/artifacts/detail?id=${item._id}` class="btn btn-info mt-2") View Details

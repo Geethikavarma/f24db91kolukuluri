@@ -5,15 +5,11 @@ const artifactsController = require('../controllers/artifactsController');
 // Define route for fetching all artifacts
 router.get('/', artifactsController.artifact_list);
 
-// Define route for fetching a specific artifact by ID
+// Define route for fetching a specific artifact by ID (JSON response)
 router.get('/:id', artifactsController.artifact_detail);
 
-// Define route for viewing details of an artifact
-router.get('/detail', (req, res, next) => {
-    console.log("Route hit with ID:", req.query.id);
-    next();
-  }, artifactsController.artifact_view_one_Page);
-  
+// Define route for viewing details of an artifact (renders Pug view)
+router.get('/detail', artifactsController.artifact_view_one_Page);
 
 // Define the route for creating an artifact
 router.post('/', artifactsController.artifact_create_post);
