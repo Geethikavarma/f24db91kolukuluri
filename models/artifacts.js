@@ -1,4 +1,4 @@
-module.exports = mongoose.model('Artifact', artifactSchema);
+
 const mongoose = require("mongoose");
 
 
