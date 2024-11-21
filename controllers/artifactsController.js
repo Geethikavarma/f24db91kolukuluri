@@ -28,33 +28,31 @@ const artifact_detail = async function (req, res) {
 };
 
 // Render the detail page for a single artifact
-exports.artifact_view_one_Page = async function (req, res) {
+const artifact_view_one_Page = async function (req, res) {
   const artifactId = req.query.id;
 
-  // Log the received ID
   console.log("Received artifact ID:", artifactId);
 
-  // Validate ObjectId format
   if (!mongoose.Types.ObjectId.isValid(artifactId)) {
     console.log("Invalid ObjectId format detected");
     return res.status(400).send({ error: "Invalid artifact ID format" });
   }
 
   try {
-    // Fetch artifact by ID
     const artifact = await Artifact.findById(artifactId);
     if (!artifact) {
       console.log(`Artifact not found with ID: ${artifactId}`);
       return res.status(404).send({ message: "Artifact not found" });
     }
 
-    // Render the detail view
+    console.log("Artifact data found:", artifact);
     res.render('artifactdetail', { title: 'Artifact Detail', artifact });
   } catch (err) {
     console.error("Error fetching artifact:", err);
     res.status(500).send({ error: `Error: ${err.message}` });
   }
 };
+
 // Create a new artifact
 const artifact_create_post = async function (req, res) {
   try {
