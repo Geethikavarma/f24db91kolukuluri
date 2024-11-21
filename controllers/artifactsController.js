@@ -61,16 +61,15 @@ const artifact_create_post = async function (req, res) {
 
 
 
-// controllers/artifactController.js
 
-// controllers/artifactsController.js
-exports.artifacts_create_Page = function (req, res) {
-  console.log("create view");
+
+exports.artifact_create_Page = function(req, res) {
+  console.log("Artifact Create Page is being called"); // To check if the route is being hit
   try {
-      res.render('artifactcreate', { title: 'Arifact Create' });
+    res.render('artifactscreate', { title: 'Create Artifact' });
   } catch (err) {
-      res.status(500);
-      res.send(`{'error': '${err}'}`);
+    res.status(500);
+    res.send(`Error: ${err.message}`);
   }
 };
 
