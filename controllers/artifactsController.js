@@ -60,18 +60,16 @@ const artifact_create_post = async function (req, res) {
 };
 
 
-// Define the artifact_create_Page function to render the create page
 exports.artifact_create_Page = function(req, res) {
   console.log("Creating new artifact page");  // Log for debugging
   try {
-    // Render the 'artifactcreate.pug' view and pass title as a dynamic variable
+    // Render the 'artifactcreate.pug' view and pass the title as a dynamic variable
     res.render('artifactcreate', { title: 'Create New Artifact' });
   } catch (err) {
     // If there's an error while rendering, send a response with a 500 error
     res.status(500).send({ error: 'Error rendering the page: ' + err.message });
   }
 };
-
 // Ensure other functions are defined (like artifact_create_post, etc.)
 exports.artifact_create_post = async function(req, res) {
   const { artifact_type, origin, age } = req.body;
@@ -134,6 +132,6 @@ module.exports = {
   artifact_create_post,
   artifact_update_put,
   artifact_delete,
-  artifact_create_Page,  // Ensure this is exported
+
   artifact_create_post,
 };
