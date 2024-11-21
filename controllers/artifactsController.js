@@ -58,17 +58,28 @@ const artifact_create_post = async function (req, res) {
     res.status(500).json({ message: `Error: ${err.message}` });
   }
 };
-
-
-// artifactsController.js
-exports.artifact_create_Page = function (req, res) {
+const artifact_create_Page = function (req, res) {
   try {
-    console.log('Rendering artifact create page'); // Debugging log
-    res.render('artifactcreate', { title: 'Create Artifact' });
+    console.log("create view");
+    res.render('artifactcreate', { title: 'Artifact Create' }); // Ensure 'artifactcreate' template exists
   } catch (err) {
-    res.status(500).send(`Error: ${err.message}`);
+    res.status(500).send(`{'error': '${err}'}`);
   }
 };
+
+
+exports.artifact_create_Page = function(req, res) {
+  
+  try{
+    console.log("create view")
+    res.render('artifactcreate', { title: 'artifact Create'});
+  }
+  catch(err){
+  res.status(500)
+  res.send(`{'error': '${err}'}`);
+  }
+  };
+  
 
 
 // Handle form submission to create a new artifact
