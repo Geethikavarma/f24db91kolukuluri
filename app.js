@@ -92,6 +92,13 @@ app.use('/users', usersRouter);
 app.use((req, res, next) => {
   next(createError(404));
 });
+router.param('id', (req, res, next, id) => {
+  if (req.path === '/create') return next(); // Skip validation for create route
+  if (!isValidObjectId(id)) {
+    return res.status(400).json({ error: "Invalid artifact ID format" });
+  }
+  next();
+});
 
 // General error handler
 app.use((err, req, res, next) => {
