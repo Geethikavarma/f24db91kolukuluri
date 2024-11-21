@@ -17,11 +17,11 @@ router.post('/', artifactsController.artifact_create_post);
 // Define the route for updating an artifact by ID
 router.put('/:id', artifactsController.artifact_update_put);
 
-// Route for displaying the "Create New Artifact" page
-router.get('/create', artifactsController.artifact_create_Page);
+// Route to render the page to create a new artifact
+router.get('/create', artifactControllers.artifact_create_Page);  // Ensure this function exists
 
 // Route to handle form submission for creating a new artifact
-router.post('/create', artifactsController.artifact_create_post);
+router.post('/create', artifactControllers.artifact_create_post);
 
 // Define the route for deleting an artifact by ID
 router.delete('/:id', artifactsController.artifact_delete);

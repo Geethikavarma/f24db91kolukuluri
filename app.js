@@ -34,6 +34,7 @@ const db = mongoose.connection;
 
 db.on('connected', async () => {
   console.log('Connected to MongoDB');
+  // Only reseed if flag is set to true
   if (reseed) {
     try {
       await recreateDB();
@@ -51,10 +52,14 @@ db.on('error', (err) => {
 // Function to reseed the database
 async function recreateDB() {
   try {
-    await Artifact.deleteMany(); // Clear all artifacts
+    // Delete all existing artifacts
+    await Artifact.deleteMany();
+    // Seed the database with initial artifact data
     const instance1 = new Artifact({ artifact_type: "vase", origin: "Greece", age: 2000 });
     const instance2 = new Artifact({ artifact_type: "sword", origin: "Japan", age: 800 });
     const instance3 = new Artifact({ artifact_type: "painting", origin: "Italy", age: 500 });
+
+    // Save the artifact instances
     await instance1.save();
     await instance2.save();
     await instance3.save();
@@ -96,7 +101,7 @@ app.use((err, req, res, next) => {
   res.render('error');
 });
 
-// Set reseeding flag
+// Set reseeding flag (set to true to reseed the database)
 const reseed = true;
 
 module.exports = app;

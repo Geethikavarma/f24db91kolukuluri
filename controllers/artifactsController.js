@@ -72,7 +72,6 @@ exports.artifact_create_Page = function(req, res) {
   }
 };
 
-
 // Handle form submission to create a new artifact
 exports.artifact_create_post = async function(req, res) {
   const { artifact_type, origin, age } = req.body;
