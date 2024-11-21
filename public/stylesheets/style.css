@@ -1,32 +1,14 @@
 body {
-  margin: 0;
   padding: 50px;
-  font-family: "Arial", "Lucida Grande", Helvetica, sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
-  background-color: #f9f9f9;
-  color: #333;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #3498db;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-a:hover {
-  color: #1e6fa8;
+  color: #e50303;
 }
 
 .artifactAttr {
-  background-color: #8ecae6;
-  color: #023047;
-  padding: 10px;
-  width: auto; /* Adjust width dynamically */
-  display: inline-block; /* Allows wrapping for long text */
-  border-radius: 5px;
-  text-align: center;
-  font-weight: bold;
-  margin: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+  background-color: rgb(0, 0, 0);
+  width: 120px;
+ }
+ 
