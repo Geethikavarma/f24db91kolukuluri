@@ -2,14 +2,8 @@ extends layout
 
 block content
   h1= title
-
-  div
-    each artifact in results
-      div.card(class='artifact-card')
-        div.card-body
-          h5.card-title #{artifact.name}
-          p.card-text Origin: #{artifact.origin}
-          p.card-text Age: #{artifact.age} years
-          a.btn.btn-primary(href=`/artifact/${artifact._id}`) View Details
-          a.btn.btn-secondary(href=`/artifact/update?id=${artifact._id}`) Update
-          a.btn.btn-danger(href=`/artifact/delete?id=${artifact._id}`) Delete
+  each item in results
+    ul 
+      h3 #{item.artifactName}
+      li Origin: #{item.origin}
+      li Age: #{item.age} years

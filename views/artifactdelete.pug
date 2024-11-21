@@ -3,46 +3,44 @@ extends layout
 block content
   h1= title
   if (toShow == null)
-    h2 No artifact to delete
+    h2 No instance to delete
   else
-    - let artifactId = toShow._id
-    - let name = toShow.name
+    - let artifactid = toShow._id
+    - let artifact_type = toShow.artifact_type
     - let origin = toShow.origin
     - let age = toShow.age
-    - let actionid = "/resource/artifacts/" + artifactId
+    - let actionid = "/resource/artifacts/" + artifactid
     script let actionid = "#{actionid}"
     div
       div.row
-        div(class='artifactAttr mr-3') Artifact ID:
-        div #{artifactId}
+        div(class='artifactAttr mr-3') Artifact ID is:
+        div #{artifactid}
       div.row
-        div(class='artifactAttr mr-3') Name:
-        div #{name}
+        div(class='artifactAttr mr-3') Artifact Name is:
+        div #{artifact_type}
       div.row
-        div(class='artifactAttr mr-3') Origin:
+        div(class='artifactAttr mr-3') origin is:
         div #{origin}
       div.row
-        div(class='artifactAttr mr-3') Age:
+        div(class='artifactAttr mr-3') age is:
         div #{age}
-    button(class="btn btn-danger m-2" onclick="deleteOnId()") Delete
+    button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
     button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
-
   script.
-    function cancel() {
-      window.location.href = '/artifacts';
-    }
-
+      function cancel() {
+        window.origin.href = '/artifacts';
+        }
   script.
-    function deleteOnId() {
+    function deleteOnid() {
+      console.log("Starting delete");
       fetch(actionid, {
         method: 'DELETE'
-      })
-      .then((resp) => resp.json())
-      .then((body) => {
+        }).then((resp) => {
+        return resp.json();
+        }).then((body) => {
         alert("Delete succeeded");
-        window.location.href = '/artifacts';
-      })
-      .catch((error) => {
+        window.origin.href = '/artifacts';
+        }).catch((error) => {
         alert("Delete failed: " + error);
       });
     }

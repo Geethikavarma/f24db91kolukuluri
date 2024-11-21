@@ -2,29 +2,29 @@ extends layout
 
 block content
   h1= title
-  form(id='ArtifactForm', action="/resource/artifacts", method="POST")
+  form(id='artifactForm', action="/resource/artifacts", method="POST")
     div.form-group
-      label(for='name') Artifact Name
-      input#name(type='text', name='name', required=true)
+      label.artifactAttr(for='artifact_type') artifact type
+      input#site_name(type='text', name='artifact_type', required=true)
     div.form-group
-      label(for='origin') Origin
-      input#origin(type='text', name='origin', required=true)
+      label.artifactAttr(for='origin') artifact Origin
+      input#location(type='text', name='origin', required=true)
     div.form-group
-      label(for='age') Age (in years)
-      input#age(type='number', name='age', required=true)
+      label.artifactAttr(for='age') age
+      input#year_established(type='number', name='age', required=true)
     input(type="submit", value="Create")
-
+  
   script.
-    document.forms['ArtifactForm'].addEventListener('submit', (event) => {
+    document.forms['artifactForm'].addEventListener('submit', (event) => {
       event.preventDefault();
+      // Show user that form is being submitted
       fetch(event.target.action, {
         method: 'POST',
-        body: new URLSearchParams(new FormData(event.target))
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
       })
       .then((resp) => resp.json())
       .then((body) => {
         alert("Save succeeded!");
-        window.location.href = '/artifacts';
       })
       .catch((error) => {
         alert("Save failed: " + error);

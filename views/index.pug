@@ -1,29 +1,17 @@
-doctype html
-html
-  head
-    meta(charset="utf-8")
-    meta(name="viewport", content="width=device-width,initial-scale=1,shrink-to-fit=no")
-    link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous")
-    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous")
-  
-  body
-  h1 Assignment 10
-  p I have Done the Assignment and changed Index.pug 
-  <br>
+extends layout
 
-    button(onclick="boost()") Press Me
-    #boost add in extra
+block content
+  h1= title
+  p I am missing my sister.
+  button(type="button" class="btn btn-secondary" onclick="boost()") Sample Button
+  div(id="boost") Add in extra
+  script.
+    var value = 0;
+    let amt = 3;
 
-
-    script.
-      let value = 0;
-      let amt = 3;
-      
-      function boost() {
-        amt += 1;
-        value += amt;
-        document.getElementById('boost').textContent = `Boosted ${value} by ${amt}`;
-      }
-
-
-a(href="/artifacts") Artifacts Search Results
+    function boost() {
+      amt += 1;
+      value += amt;
+      document.getElementById("boost").innerText = `Boosted ${value} by ${amt}.`;
+    }
+  a(href="/artifacts") View Artifacts
