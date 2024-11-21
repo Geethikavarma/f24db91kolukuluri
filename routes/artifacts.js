@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const artifactControllers = require('../controllers/artifactsController');
 
-console.log(artifactsController)
+
 // Define route for fetching all artifacts
 router.get('/', artifactControllers.artifact_list);
 
