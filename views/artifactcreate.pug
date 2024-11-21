@@ -1,7 +1,7 @@
 extends layout
 block content
 h1= Artifact Create
-form(id='ArtifactForm', action="/resource/artifacts", method="POST")
+form(id='ArtifactForm', action="/artifacts", method="POST")
 div.form-group
 label.artifactAttr(for='artifact_type') artifact type
 input#artifact_type(type='text', name='artifact_type')
@@ -15,19 +15,19 @@ input(type="submit")
 script.
 document.forms['artifactForm'].addEventListener('submit', (event) => {
 event.preventDefault();
-// TODO do something here to show user that form is being submitted
+
 fetch(event.target.action, {
 method: 'POST',
 body: new URLSearchParams(new FormData(event.target)) // event.target is the form
 }).then((resp) => {
-return resp.json(); // or resp.text() or whatever the server sends
+return resp.json(); 
 }).then((body) => {
 alert("Save succeded")
-// TODO handle body
+
 }).catch((error) => {
-// TODO handle error
+
 alert("Save failed " + error )
 });
 });
-/* GET create update page */
+
 router.get('/update', artifact_controlers.artifact_update_Page);
