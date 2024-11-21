@@ -19,6 +19,9 @@ const Artifact = require('./models/artifacts');
 
 const app = express();
 
+// Set reseeding flag (set to true to reseed the database)
+const reseed = true;
+
 // MongoDB connection setup
 mongoose.connect(process.env.MONGO_CON, {
   connectTimeoutMS: 30000, // 30-second timeout
@@ -93,7 +96,6 @@ app.use((req, res, next) => {
   next(createError(404));
 });
 
-
 // General error handler
 app.use((err, req, res, next) => {
   res.locals.message = err.message;
@@ -101,8 +103,5 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.render('error');
 });
-
-// Set reseeding flag (set to true to reseed the database)
-const reseed = true;
 
 module.exports = app;
