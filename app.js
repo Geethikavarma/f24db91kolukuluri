@@ -16,7 +16,7 @@ var resourceRouter = require('./routes/resource');  // Resource router
 // MongoDB imports
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://ajithanarra24:ugekUdGXDkr3vqem@cluster0.m85be.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
+mongoose.connect('mongodb+srv://s574391:Geethika22@cluster0.ijbao.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
   serverSelectionTimeoutMS: 10000,
 }).then(() => {
   console.log('Connected to MongoDB Atlas');
