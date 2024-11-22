@@ -3,7 +3,13 @@ extends layout
 block content
   h1= title
   each item in results
+    h3 Artifact Type: #{item.artifact_type}
     ul 
-      h3 #{item.artifactName}
       li Origin: #{item.origin}
       li Age: #{item.age} years
+    button.btn.btn-primary.mt-2(onclick=`navigateToUpdate('${item._id}')`) Update
+
+  script. 
+    function navigateToUpdate(artifactid){
+      window.location.href= `/artifacts/update?id=${artifactid}`;
+    }
