@@ -28,6 +28,14 @@ block content
     script.
         document.forms['ArtifactForm'].addEventListener('submit', (event) => {
             event.preventDefault();
+             // Validate the age field
+            const ageInput = document.getElementById('age');
+            const ageValue = parseInt(ageInput.value, 10);
+
+            if (isNaN(ageValue) || ageValue < 100) {
+                alert("The artifact age must be at least 100.");
+                return; // Prevent form submission
+            }
             // Show user that form is being submitted
             fetch(event.target.action, {
                 method: 'PUT',

@@ -2,8 +2,35 @@ extends layout
 
 block content
   h1= title
+  // Add a "Create New Artifact" button at the top
+  a.btn.btn-success.mb-3(href='/artifacts/create') Create New Artifact
+  // Loop through the artifacts in the collection
   each item in results
-    ul 
-      h3 #{item.artifactName}
-      li Origin: #{item.origin}
-      li Age: #{item.age} years
+    div(class="card my-2 p-2 border")
+      h3 Artifact Type: #{item.artifact_type}
+      ul
+        li <b>Origin:</b> #{item.origin}
+        li <b>Age:</b> #{item.age} years
+
+      // Button to navigate to the update page
+      button.btn.btn-success.mt-2(onclick=`navigateToUpdate('${item._id}')`) Update
+
+      // Button to navigate to the detail view
+      button.btn.btn-warning.mt-2(onclick=`navigateToDetails('${item._id}')`) View Details
+
+      // Button to navigate to the delete view
+      button.btn.btn-danger.mt-2(onclick=`navigateToDelete('${item._id}')`) Delete
+
+  // Add a script to handle the navigation
+  script.
+    function navigateToUpdate(artifactId) {
+      window.location.href = `/artifacts/update?id=${artifactId}`;
+    }
+
+    function navigateToDetails(artifactId) {
+      window.location.href = `/artifacts/detail?id=${artifactId}`;
+    }
+
+    function navigateToDelete(artifactId) {
+      window.location.href = `/artifacts/delete?id=${artifactId}`;
+    }

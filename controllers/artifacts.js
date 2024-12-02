@@ -121,15 +121,23 @@ exports.artifact_create_Page = function (req, res) {
 
 // Handle building the view for updating a costume.
 // query provides the id
-exports.artifact_update_Page = async function (req, res) {
-  console.log("update view for item " + req.query.id)
+exports.artifact_update_Page = async function(req, res) {
+  console.log("Update view for Artifact with ID " + req.query.id);
   try {
-    let result = await Artifact.findById(req.query.id)
-    res.render('artifactupdate', { title: 'Artifact Update', toShow: result });
-  }
-  catch (err) {
-    res.status(500)
-    res.send(`{'error': '${err}'}`);
+      let result = await Artifact.findById(req.query.id);
+      res.render('Artifactupdate', { title: 'Artifact Update', toShow: result });
+  } catch (err) {
+      if (err.name === 'ValidationError') {
+          // If it's a validation error, render the page with the error message
+          res.render('Artifactupdate', {
+              title: 'Artifact Update',
+              message: `Error: ${err.message}`,
+              toShow: req.body // Preserve any previously entered data in the form
+          });
+      } else {
+          // Handle other types of errors
+          res.status(500).send(`{"error": "${err}"}`);
+      }
   }
 };
 
@@ -143,5 +151,28 @@ exports.artifact_delete_Page = async function (req, res) {
   catch (err) {
     res.status(500)
     res.send(`{'error': '${err}'}`);
+  }
+};
+
+exports.artifact_update_post = async function(req, res) {
+  try {
+      // Try updating the Artifact
+      const updatedSite = await artifact.findByIdAndUpdate(req.body.id, req.body, { new: true, runValidators: true });
+
+      if (!updatedSite) {
+          return res.status(404).json({ error: 'Artifact not found' });
+      }
+
+      // Return a success message if the update is successful
+      res.status(200).json({ message: 'Update succeeded', updatedSite });
+  } catch (err) {
+      // Check if the error is a validation error
+      if (err.name === 'ValidationError') {
+          // Send back the validation error details to the client
+          return res.status(400).json({ error: `Validation failed: ${err.message}` });
+      }
+
+      // Handle other types of errors
+      res.status(500).json({ error: `Internal server error: ${err.message}` });
   }
 };

@@ -13,17 +13,13 @@ block content
     script let actionid = "#{actionid}"
     div
       div.row
-        div(class='artifactAttr mr-3') Artifact ID is:
-        div #{artifactid}
+        div(class='artifactAttr mr-3') Artifact ID is: #{artifactid}
       div.row
-        div(class='artifactAttr mr-3') Artifact Name is:
-        div #{artifact_type}
+        div(class='artifactAttr mr-3') Artifact Name is: #{artifact_type}
       div.row
-        div(class='artifactAttr mr-3') origin is:
-        div #{origin}
+        div(class='artifactAttr mr-3') origin is: #{origin}
       div.row
-        div(class='artifactAttr mr-3') age is:
-        div #{age}
+        div(class='artifactAttr mr-3') age is: #{age}
     button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
     button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
   script.
